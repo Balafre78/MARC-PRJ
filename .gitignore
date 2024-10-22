@@ -1,2 +1,8 @@
 /.idea
 /cmake-build-debug
+/loc.*
+/map.*
+/moves.*
+/queue.*
+/stack.*
+*.o
