@@ -3,3 +3,21 @@
 //
 
 #include "tree.h"
+
+t_node *createNode(int value, int depth, int nbSons) {
+    t_node *ptr = malloc(sizeof(t_node));
+    if (ptr == NULL) {
+        fprintf(stderr, "Cannot allocate mem!\n");
+        exit(EXIT_FAILURE);
+    }
+    ptr->value = value;
+    ptr->depth = depth;
+    ptr->nbSons = nbSons;
+    ptr->sons = NULL;
+    ptr->sons = malloc(nbSons * sizeof(int));
+    if (ptr->sons == NULL) {
+        fprintf(stderr, "Cannot allocate mem!\n");
+        exit(EXIT_FAILURE);
+    }
+    return ptr;
+}
