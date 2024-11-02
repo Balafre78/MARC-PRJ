@@ -56,6 +56,7 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
 }
 
 t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_localisation prevLoc) {
+    t_node *ptr;
     int idxUMA = 0;
 
     // We are supposed that MoveArr is large enough for our purpose
@@ -68,9 +69,28 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_loc
 
     t_localisation newloc = move(prevLoc, tree->moveArr[idxUMA]);
 
-    t_node *ptr = createNode(map.costs[newloc.pos.x][newloc.pos.y], depth, tree->maxDepth - depth);
+    int localCost, nodeNbSons;
+    if (
+            newloc.pos.x < 0 ||
+            newloc.pos.y < 0 ||
+            newloc.pos.x >= map.x_max ||
+            newloc.pos.y >= map.y_max
+            ) {
+        localCost = COST_UNDEF;
+        nodeNbSons = 0;
+    } else {
+        localCost = map.costs[newloc.pos.x][newloc.pos.y];
+        if (localCost == COST_UNDEF) {
+            nodeNbSons = 0;
+        } else {
+            nodeNbSons = tree->maxDepth - depth;;
+        }
+    }
 
-    for (int i = 0; i < tree->maxDepth - depth; i++) {
+    ptr = createNode(localCost, depth, nodeNbSons);
+
+
+    for (int i = 0; i < nodeNbSons; i++) {
         ptr->sons[i] = buildTreeRec(map, tree, usedMoveArr, depth + 1, newloc);
     }
 
