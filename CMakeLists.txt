@@ -13,4 +13,8 @@ add_executable(MARC-PRJ main.c
         queue.c
         queue.h
         stack.c
-        stack.h)
+        stack.h
+        tree.c
+        tree.h
+        utils.c
+        utils.h)
