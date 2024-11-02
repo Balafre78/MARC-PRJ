@@ -34,3 +34,47 @@ void deleteNode(t_node *node) {
     }
     free(node);
 }
+
+t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_localisation iniLoc) {
+    t_tree *tree = malloc(sizeof(tree));
+    if (tree == NULL) {
+        fprintf(stderr, "Cannot allocate mem!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    tree->lenArr = lenArr;
+    tree->moveArr = moveArr;
+    tree->maxDepth = maxDepth;
+
+    int *usedMoveArr = malloc(lenArr * sizeof(int));
+    tree->root = createNode(COST_UNDEF, -1, lenArr);
+    for (int i = 0; i < lenArr; i++) {
+        tree->root->sons[i] = buildTreeRec(map, tree, usedMoveArr, 0, iniLoc);
+    }
+
+    return tree;
+}
+
+t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_localisation prevLoc) {
+    int idxUMA = 0;
+
+    // We are supposed that MoveArr is large enough for our purpose
+    while (idxUMA < tree->lenArr) {
+        if (usedMoveArr[idxUMA] != 0)
+            break;
+        idxUMA++;
+    }
+    usedMoveArr[idxUMA] = 1;
+
+    t_localisation newloc = move(prevLoc, tree->moveArr[idxUMA]);
+
+    t_node *ptr = createNode(map.costs[newloc.pos.x][newloc.pos.y], depth, tree->maxDepth - depth);
+
+    for (int i = 0; i < tree->maxDepth - depth; i++) {
+        ptr->sons[i] = buildTreeRec(map, tree, usedMoveArr, depth + 1, newloc);
+    }
+
+
+    usedMoveArr[idxUMA] = 0;
+    return ptr;
+}

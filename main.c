@@ -4,38 +4,38 @@
 #include "utils.h"
 
 void nodeTest() {
-    t_node *root = createNode(COST_UNDEF, 0, 3);
+    t_node *root = createNode(COST_UNDEF, -1, 3);
 
-    t_node *left = createNode(0, 1, 2);
-    t_node *mid = createNode(1, 1, 2);
-    t_node *right = createNode(2, 1, 2);
+    t_node *left = createNode(0, 0, 2);
+    t_node *mid = createNode(1, 0, 2);
+    t_node *right = createNode(2, 0, 2);
 
     root->sons[0] = left;
     root->sons[1] = mid;
     root->sons[2] = right;
 
-    root->sons[0]->sons[0] = createNode(1, 2, 1);
-    root->sons[0]->sons[1] = createNode(2, 2, 1);
+    root->sons[0]->sons[0] = createNode(1, 1, 1);
+    root->sons[0]->sons[1] = createNode(2, 1, 1);
 
-    root->sons[1]->sons[0] = createNode(0, 2, 1);
-    root->sons[1]->sons[1] = createNode(2, 2, 1);
+    root->sons[1]->sons[0] = createNode(0, 1, 1);
+    root->sons[1]->sons[1] = createNode(2, 1, 1);
 
-    root->sons[2]->sons[0] = createNode(0, 2, 1);
-    root->sons[2]->sons[1] = createNode(1, 2, 1);
+    root->sons[2]->sons[0] = createNode(0, 1, 1);
+    root->sons[2]->sons[1] = createNode(1, 1, 1);
 
-    root->sons[0]->sons[0]->sons[0] = createNode(2, 3, 0);
+    root->sons[0]->sons[0]->sons[0] = createNode(2, 2, 0);
 
-    root->sons[0]->sons[1]->sons[0] = createNode(1, 3, 0);
+    root->sons[0]->sons[1]->sons[0] = createNode(1, 2, 0);
 
-    root->sons[1]->sons[0]->sons[0] = createNode(2, 3, 0);
+    root->sons[1]->sons[0]->sons[0] = createNode(2, 2, 0);
 
-    root->sons[1]->sons[1]->sons[0] = createNode(0, 3, 0);
+    root->sons[1]->sons[1]->sons[0] = createNode(0, 2, 0);
 
-    root->sons[2]->sons[0]->sons[0] = createNode(1, 3, 0);
+    root->sons[2]->sons[0]->sons[0] = createNode(1, 2, 0);
 
-    root->sons[2]->sons[1]->sons[0] = createNode(0, 3, 0);
+    root->sons[2]->sons[1]->sons[0] = createNode(0, 2, 0);
 
-    t_tree faketree = {root, 3, NULL, 3};
+    t_tree faketree = {root, 3, NULL, 2};
     printTree(&faketree);
 
 
@@ -43,7 +43,10 @@ void nodeTest() {
 }
 
 int main() {
-    /*t_map map;
+    nodeTest();
+
+
+    t_map map;
 
     // The following preprocessor directive checks if the code is being compiled on a Windows system.
     // If either _WIN32 or _WIN64 is defined, it means we are on a Windows platform.
@@ -72,8 +75,17 @@ int main() {
         printf("\n");
     }
     displayMap(map);
-    return 0;*/
-    nodeTest();
+
+
+
+
+
+
+
+
+
+
+
 
     return 0;
 }

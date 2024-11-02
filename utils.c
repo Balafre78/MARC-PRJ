@@ -5,22 +5,23 @@
 #include "utils.h"
 
 void printTreeRec(t_node *node, int sonsPass, int *architecture) {
-    for (int i = 0; i < node->depth; i++) {
+    for (int i = 0; i < node->depth + 1; i++) {
         switch (architecture[i]) {
             case 0:
                 printf("    ");
                 break;
             case 1:
                 printf("|   ");
+                break;
         }
 
     }
     if (sonsPass == node->nbSons) {
         printf("`-- %d\n", node->value);
-        architecture[node->depth] = 0;
+        architecture[node->depth + 1] = 0;
     } else {
         printf("|-- %d\n", node->value);
-        architecture[node->depth] = 1;
+        architecture[node->depth + 1] = 1;
     }
     for (int i = 0; i < node->nbSons; i++) {
         printTreeRec(node->sons[i], i, architecture);

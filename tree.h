@@ -6,7 +6,6 @@
 #define MARC_PRJ_TREE_H
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include <stdio.h>
 
 #include "moves.h"
@@ -66,16 +65,17 @@ void deleteNode(t_node *node);
  * @param moveArr Array of mvts available
  * @return Pointer to the Tree
  */
-t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr);
+t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_localisation iniLoc);
 
 /**
  * @brief Build recursivly the tree
  * @param map Map to analyse
  * @param tree Used for his properties
  * @param usedMoveArr Arr to store used mvt 1 if used 0 else
+ * @param depth the depth of the partial tree root
  * @return Pointer to the completed node
  */
-t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr);
+t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_localisation prevLoc);
 
 /**
  * @brief Destroy a Tree in the heap
