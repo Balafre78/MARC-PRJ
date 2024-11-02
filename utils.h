@@ -6,6 +6,7 @@
 #define MARC_PRJ_UTILS_H
 
 #include "moves.h"
+#include "tree.h"
 
 /**
  * @brief Select movements for this turn
@@ -13,5 +14,11 @@
  * @return an array of move
  */
 t_move *selMoves(int size);
+
+/**
+ * @brief Print a tree in console (stdout)
+ * @param tree the tree to print
+ */
+void printTree(t_tree *tree);
 
 #endif //MARC_PRJ_UTILS_H

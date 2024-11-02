@@ -10,14 +10,27 @@ t_node *createNode(int value, int depth, int nbSons) {
         fprintf(stderr, "Cannot allocate mem!\n");
         exit(EXIT_FAILURE);
     }
+
     ptr->value = value;
     ptr->depth = depth;
     ptr->nbSons = nbSons;
-    ptr->sons = NULL;
-    ptr->sons = malloc(nbSons * sizeof(int));
-    if (ptr->sons == NULL) {
-        fprintf(stderr, "Cannot allocate mem!\n");
-        exit(EXIT_FAILURE);
+
+    if (nbSons > 0) {
+        ptr->sons = malloc(nbSons * sizeof(int));
+        if (ptr->sons == NULL) {
+            fprintf(stderr, "Cannot allocate mem!\n");
+            exit(EXIT_FAILURE);
+        }
+    } else {
+        ptr->sons = NULL;
     }
     return ptr;
+}
+
+void deleteNode(t_node *node) {
+    if (node->nbSons > 0) {
+        free(node->sons);
+        node->sons = NULL;
+    }
+    free(node);
 }
