@@ -10,9 +10,16 @@
 #include "moves.h"
 #include "tree.h"
 
-#define SEED 255
-#define AMOUNT_MVT 7
+typedef struct s_tree t_tree;
 
+#define COST_DIE 1000
+
+#define SEED 1025
+#ifndef SEED
+#include <time.h>
+#endif
+
+#define AMOUNT_MVT 7
 #define ARR_MOVEPOOL { 22, 15, 7, 7, 21, 21, 7}
 #define BASE_SUM 100
 

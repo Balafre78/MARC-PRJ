@@ -4,19 +4,23 @@
 
 #include "utils.h"
 
-void printTreeRec(t_node *node, int sonsPass, int *architecture) {
+void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architecture) {
+    //printf("depth:%d\n", node->depth + 2);
+    //printf("nbSons:%d\n", nbParentSons);
+    //printf("sonsPass:%d\n", sonsPass);
     for (int i = 0; i < node->depth + 1; i++) {
-        switch (architecture[i]) {
-            case 0:
-                printf("    ");
-                break;
-            case 1:
-                printf("|   ");
-                break;
+        if (architecture[i] == 0) {
+            printf("    ");
+        } else if (architecture[i] == 1) {
+            printf("|   ");
+        } else {
+            printf("\n");
+            fprintf(stderr, "Unknown arch ...!\n");
+            exit(EXIT_FAILURE);
         }
 
     }
-    if (sonsPass == node->nbSons) {
+    if (sonsPass + 1 == nbParentSons) {
         printf("`-- %d\n", node->value);
         architecture[node->depth + 1] = 0;
     } else {
@@ -24,7 +28,7 @@ void printTreeRec(t_node *node, int sonsPass, int *architecture) {
         architecture[node->depth + 1] = 1;
     }
     for (int i = 0; i < node->nbSons; i++) {
-        printTreeRec(node->sons[i], i, architecture);
+        printTreeRec(node->sons[i], i, node->nbSons, architecture);
     }
 }
 
@@ -35,13 +39,26 @@ void printTree(t_tree *tree) {
         fprintf(stderr, "Cannot allocate mem!\n");
         exit(EXIT_FAILURE);
     }
-    printTreeRec(tree->root, tree->root->nbSons, architecture);
+
+    printf("`-- %d\n", tree->root->value);
+    architecture[0] = 0;
+
+    for (int i = 0; i < tree->root->nbSons; i++) {
+        printTreeRec(tree->root->sons[i], i, tree->root->nbSons, architecture);
+    }
+
+
     free(architecture);
 }
 
 t_move *selMoves(int size) {
     int movePool[AMOUNT_MVT] = ARR_MOVEPOOL;
+
+#ifdef SEED
     srand(SEED);
+#else
+    srand(time(NULL));
+#endif
 
     int choice, acc, sum;
     sum = BASE_SUM;

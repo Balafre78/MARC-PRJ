@@ -36,7 +36,7 @@ void deleteNode(t_node *node) {
 }
 
 t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_localisation iniLoc) {
-    t_tree *tree = malloc(sizeof(tree));
+    t_tree *tree = malloc(sizeof(t_tree));
     if (tree == NULL) {
         fprintf(stderr, "Cannot allocate mem!\n");
         exit(EXIT_FAILURE);
@@ -76,11 +76,11 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_loc
             newloc.pos.x >= map.x_max ||
             newloc.pos.y >= map.y_max
             ) {
-        localCost = COST_UNDEF;
+        localCost = COST_DIE;
         nodeNbSons = 0;
     } else {
         localCost = map.costs[newloc.pos.x][newloc.pos.y];
-        if (localCost == COST_UNDEF) {
+        if (localCost <= COST_DIE) {
             nodeNbSons = 0;
         } else {
             nodeNbSons = tree->maxDepth - depth;;
