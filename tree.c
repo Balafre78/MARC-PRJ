@@ -16,7 +16,7 @@ t_node *createNode(int value, int depth, int nbSons) {
     ptr->nbSons = nbSons;
 
     if (nbSons > 0) {
-        ptr->sons = malloc(nbSons * sizeof(int));
+        ptr->sons = malloc(nbSons * sizeof(t_node **));
         if (ptr->sons == NULL) {
             fprintf(stderr, "Cannot allocate mem!\n");
             exit(EXIT_FAILURE);
@@ -29,6 +29,10 @@ t_node *createNode(int value, int depth, int nbSons) {
 
 void deleteNode(t_node *node) {
     if (node->nbSons > 0) {
+        for (int i = 0; i < node->nbSons; i++)
+            if (node->sons[i] != NULL)
+                deleteNode(node->sons[i]);
+
         free(node->sons);
         node->sons = NULL;
     }
@@ -99,7 +103,7 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_loc
         if (localCost >= COST_DIE) {
             nodeNbSons = 0;
         } else {
-            nodeNbSons = tree->maxDepth - depth - 1;
+            nodeNbSons = tree->maxDepth - depth;
         }
     }
 

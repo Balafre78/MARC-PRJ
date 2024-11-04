@@ -23,13 +23,19 @@ void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architectur
 
     }
     if (sonsPass + 1 == nbParentSons) {
-        printf("`-- %d\n", node->value);
+        printf("`-- %d ", node->value);
         architecture[node->depth + 1] = 0;
     } else {
-        printf("|-- %d\n", node->value);
+        printf("|-- %d ", node->value);
         architecture[node->depth + 1] = 1;
     }
+    printf("\n");
+
     for (int i = 0; i < node->nbSons; i++) {
+        if (node->sons[i] == NULL) {
+            fprintf(stderr, "Incohrent node->nbSons//content!\n");
+            exit(EXIT_FAILURE);
+        }
         printTreeRec(node->sons[i], i, node->nbSons, architecture);
     }
 }
@@ -55,12 +61,6 @@ void printTree(t_tree *tree) {
 
 t_move *selMoves(int size) {
     int movePool[AMOUNT_MVT] = ARR_MOVEPOOL;
-
-#ifdef SEED
-    srand(SEED);
-#else
-    srand(time(NULL));
-#endif
 
     int choice, acc, sum;
     sum = BASE_SUM;

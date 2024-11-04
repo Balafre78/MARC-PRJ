@@ -43,8 +43,13 @@ void nodeTest() {
 }
 
 int main() {
-    nodeTest();
-
+#ifdef SEED
+    srand(SEED);
+#else
+    unsigned int seed = time(NULL);
+    printf("seed:%u\n", seed);
+    srand(seed);
+#endif
 
     t_map map;
 
@@ -70,12 +75,15 @@ int main() {
         }
         printf("\n");
     }
-    //displayMap(map);
+    displayMap(map);
 
+
+    nodeTest();
 
     t_move *availMoves = selMoves(9);
     t_localisation initLoc = loc_init(0,0, NORTH);
     t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
+    printf("END OF BUILD\n");
 
     printTree(bulk);
 
