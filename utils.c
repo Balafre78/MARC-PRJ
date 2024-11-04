@@ -5,9 +5,11 @@
 #include "utils.h"
 
 void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architecture) {
-    //printf("depth:%d\n", node->depth + 2);
-    //printf("nbSons:%d\n", nbParentSons);
-    //printf("sonsPass:%d\n", sonsPass);
+#ifdef DEBUG
+    printf("depth:%d\n", node->depth + 1);
+    printf("nbSons:%d\n", nbParentSons);
+    printf("sonsPass:%d\n", sonsPass);
+#endif
     for (int i = 0; i < node->depth + 1; i++) {
         if (architecture[i] == 0) {
             printf("    ");
@@ -69,15 +71,22 @@ t_move *selMoves(int size) {
         choice = rand() % sum;
 
         acc = 0;
-        for (int j = 0; j < 7; j++) {
-            if (acc <= choice && choice < acc + movePool[j]) {
-                movePool[j]--;
-                moveArr[i] = (t_move) j;
+        for (int idxMvt = 0; idxMvt < AMOUNT_MVT; idxMvt++) {
+            //printf("selMvt:%d | acc:%2d | choice:%2d | acc + movePool[idxMvt]:%2d\n", idxMvt, acc, choice, acc + movePool[idxMvt]);
+            if (acc <= choice && choice < acc + movePool[idxMvt]) {
+                movePool[idxMvt]--;
+                moveArr[i] = (t_move) idxMvt;
+                break;
             }
-            acc += movePool[j];
+            acc += movePool[idxMvt];
         }
         sum--;
     }
 
+#ifdef DEBUG
+    for (int i = 0; i < size; i++) {
+        printf("Move %d: %d\n", i, moveArr[i]);
+    }
+#endif
     return moveArr;
 }

@@ -75,7 +75,8 @@ int main() {
 
     t_move *availMoves = selMoves(9);
     t_localisation initLoc = loc_init(0,0, NORTH);
-    t_tree *bulk = buildTree(map, 5, 9, availMoves, initLoc);
+    t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
+
     printTree(bulk);
 
 

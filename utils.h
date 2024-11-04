@@ -23,6 +23,8 @@ typedef struct s_tree t_tree;
 #define ARR_MOVEPOOL { 22, 15, 7, 7, 21, 21, 7}
 #define BASE_SUM 100
 
+//#define DEBUG
+
 /**
  * @brief Select movements for this turn
  * @param size amount of mvts to select

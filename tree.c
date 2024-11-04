@@ -46,7 +46,12 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
     tree->moveArr = moveArr;
     tree->maxDepth = maxDepth;
 
-    int *usedMoveArr = malloc(lenArr * sizeof(int));
+    int *usedMoveArr = calloc(lenArr, sizeof(int));
+    if (usedMoveArr == NULL) {
+        fprintf(stderr, "Cannot allocate mem!\n");
+        exit(EXIT_FAILURE);
+    }
+
     tree->root = createNode(COST_UNDEF, -1, lenArr);
     for (int i = 0; i < lenArr; i++) {
         tree->root->sons[i] = buildTreeRec(map, tree, usedMoveArr, 0, iniLoc);
@@ -56,14 +61,25 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
 }
 
 t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_localisation prevLoc) {
+#ifdef DEBUG
+    printf("usedMoveArr[idxUMA]: ");
+    for (int i = 0; i < tree->lenArr; i++) {
+        printf("%d", usedMoveArr[i]);
+    }
+    printf("\n");
+#endif
     t_node *ptr;
     int idxUMA = 0;
 
     // We are supposed that MoveArr is large enough for our purpose
     while (idxUMA < tree->lenArr) {
-        if (usedMoveArr[idxUMA] != 0)
+        if (usedMoveArr[idxUMA] != 1)
             break;
         idxUMA++;
+    }
+    if (idxUMA >= tree->lenArr) {
+        fprintf(stderr, "idxUMA is above tree->lenArr!\n");
+        exit(EXIT_FAILURE);
     }
     usedMoveArr[idxUMA] = 1;
 
@@ -80,16 +96,16 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_loc
         nodeNbSons = 0;
     } else {
         localCost = map.costs[newloc.pos.x][newloc.pos.y];
-        if (localCost <= COST_DIE) {
+        if (localCost >= COST_DIE) {
             nodeNbSons = 0;
         } else {
-            nodeNbSons = tree->maxDepth - depth;;
+            nodeNbSons = tree->maxDepth - depth - 1;
         }
     }
 
     ptr = createNode(localCost, depth, nodeNbSons);
 
-
+    //printf("nodeNbSons:%d\n", nodeNbSons);
     for (int i = 0; i < nodeNbSons; i++) {
         ptr->sons[i] = buildTreeRec(map, tree, usedMoveArr, depth + 1, newloc);
     }
