@@ -14,7 +14,7 @@ typedef struct s_tree t_tree;
 
 #define COST_DIE 1000
 
-//#define SEED 1730761706
+#define SEED 1730804099
 #ifndef SEED
 #include <time.h>
 #endif
