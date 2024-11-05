@@ -61,7 +61,7 @@ int main() {
 #else
     map = createMapFromFile("../maps/example1.map");
 #endif
-    printf("Map created with dimensions %d x %d\n", map.y_max, map.x_max);
+    printf("Map created with dimensions (y:%d) x (x:%d)\n", map.y_max, map.x_max);
     for (int i = 0; i < map.y_max; i++) {
         for (int j = 0; j < map.x_max; j++) {
             printf("%d ", map.soils[i][j]);
@@ -82,7 +82,7 @@ int main() {
 
     t_move *availMoves = selMoves(9);
     t_localisation initLoc = loc_init(4,5, NORTH);
-    t_tree *bulk = buildTree(map, 2, 4, availMoves, initLoc);
+    t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
 
     printf("\nEND OF BUILD\n\n");
 

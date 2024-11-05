@@ -92,8 +92,11 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
         localCost = COST_DIE;
         nodeNbSons = 0;
     } else {
-        localCost = map.costs[newloc.pos.x][newloc.pos.y];
-        if (localCost >= COST_DIE || tree->maxDepth <= depth) {
+        localCost = map.costs[newloc.pos.y][newloc.pos.x];
+        if (localCost >= COST_DIE ) {
+            nodeNbSons = 0;
+            localCost = COST_DIE ;
+        } else if (tree->maxDepth <= depth) {
             nodeNbSons = 0;
         } else {
             //nodeNbSons = tree->maxDepth +1 - depth;
