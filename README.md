@@ -5,6 +5,8 @@
 ## Acknowledgement
 
 * This repo is fork from [nicolas-flasque-efrei/MARC](https://github.com/nicolas-flasque-efrei/MARC)
+* Les fichiers du forks NE SONT PAS MODIFIEE
+* Exception faite du main.c
 
 ---
 

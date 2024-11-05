@@ -76,7 +76,7 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
  * @param depth the depth of the partial tree root
  * @return Pointer to the completed node
  */
-t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_localisation prevLoc);
+t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, int idxUMA, t_localisation prevLoc);
 
 /**
  * @brief Destroy a Tree in the heap

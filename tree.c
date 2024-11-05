@@ -21,6 +21,9 @@ t_node *createNode(int value, int depth, int nbSons) {
             fprintf(stderr, "Cannot allocate mem!\n");
             exit(EXIT_FAILURE);
         }
+        for (int i = 0; i < nbSons; i++) {
+            ptr->sons[i] = NULL;
+        }
     } else {
         ptr->sons = NULL;
     }
@@ -58,13 +61,16 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
 
     tree->root = createNode(COST_UNDEF, -1, lenArr);
     for (int i = 0; i < lenArr; i++) {
-        tree->root->sons[i] = buildTreeRec(map, tree, usedMoveArr, 0, iniLoc);
+        tree->root->sons[i] = buildTreeRec(map, tree, usedMoveArr, i, 0, iniLoc);
     }
 
     return tree;
 }
 
-t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_localisation prevLoc) {
+t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc) {
+    t_node *ptr;
+    usedMoveArr[idxUMA] = 1;
+
 #ifdef DEBUG
     printf("usedMoveArr[idxUMA]: ");
     for (int i = 0; i < tree->lenArr; i++) {
@@ -72,46 +78,44 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, t_loc
     }
     printf("\n");
 #endif
-    t_node *ptr;
-    int idxUMA = 0;
 
-    // We are supposed that MoveArr is large enough for our purpose
-    while (idxUMA < tree->lenArr) {
-        if (usedMoveArr[idxUMA] != 1)
-            break;
-        idxUMA++;
-    }
-    if (idxUMA >= tree->lenArr) {
-        fprintf(stderr, "idxUMA is above tree->lenArr!\n");
-        exit(EXIT_FAILURE);
-    }
-    usedMoveArr[idxUMA] = 1;
 
     t_localisation newloc = move(prevLoc, tree->moveArr[idxUMA]);
 
     int localCost, nodeNbSons;
     if (
-            newloc.pos.x < 0 ||
-            newloc.pos.y < 0 ||
-            newloc.pos.x >= map.x_max ||
-            newloc.pos.y >= map.y_max
-            ) {
+        newloc.pos.x < 0 ||
+        newloc.pos.y < 0 ||
+        newloc.pos.x >= map.x_max ||
+        newloc.pos.y >= map.y_max
+    ) {
         localCost = COST_DIE;
         nodeNbSons = 0;
     } else {
         localCost = map.costs[newloc.pos.x][newloc.pos.y];
-        if (localCost >= COST_DIE) {
+        if (localCost >= COST_DIE || tree->maxDepth <= depth) {
             nodeNbSons = 0;
         } else {
-            nodeNbSons = tree->maxDepth - depth;
+            //nodeNbSons = tree->maxDepth +1 - depth;
+            nodeNbSons = tree->lenArr - depth - 1;
         }
     }
 
     ptr = createNode(localCost, depth, nodeNbSons);
 
-    //printf("nodeNbSons:%d\n", nodeNbSons);
-    for (int i = 0; i < nodeNbSons; i++) {
-        ptr->sons[i] = buildTreeRec(map, tree, usedMoveArr, depth + 1, newloc);
+    if (nodeNbSons > 0) {
+        //printf("Enter SON\n");
+        int d = 0;
+        for (int i = 0; i < tree->lenArr; i++) {
+            if (usedMoveArr[i] == 0) {
+                ptr->sons[i-d] = buildTreeRec(map, tree, usedMoveArr, i, depth + 1, newloc);
+            } else {
+                d++;
+            }
+        }
+        //printf("END SON\n");
+
+
     }
 
 

@@ -7,7 +7,7 @@
 void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architecture) {
 #ifdef DEBUG
     printf("depth:%d\n", node->depth + 1);
-    printf("nbSons:%d\n", nbParentSons);
+    printf("nbParentSons:%d\n", nbParentSons);
     printf("sonsPass:%d\n", sonsPass);
 #endif
     for (int i = 0; i < node->depth + 1; i++) {
@@ -33,7 +33,7 @@ void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architectur
 
     for (int i = 0; i < node->nbSons; i++) {
         if (node->sons[i] == NULL) {
-            fprintf(stderr, "Incohrent node->nbSons//content!\n");
+            fprintf(stderr, "Incohrent node->nbSons{%d}//content!\n", node->nbSons);
             exit(EXIT_FAILURE);
         }
         printTreeRec(node->sons[i], i, node->nbSons, architecture);
