@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "map.h"
-#include "tree.h"
 #include "utils.h"
 #include "testunit.h"
 
 int main() {
+
+    // Define the seed either with predefined SEED macro or with some randomness from time
 #ifdef SEED
     srand(SEED);
 #else
@@ -39,6 +40,8 @@ int main() {
     }
     displayMap(map);
 
+
+    // Test units
 
     nodeTest();
 

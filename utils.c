@@ -10,6 +10,10 @@ void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architectur
     printf("nbParentSons:%d\n", nbParentSons);
     printf("sonsPass:%d\n", sonsPass);
 #endif
+    // Check the different stage of the tree at each depth (represented by the architecture var)
+    // if there's a directory it should be  "|   "
+    // if there's a nothing it should be    "    "
+    // Else it means architecture is not well initialized (the node depth is incoherent) !
     for (int i = 0; i < node->depth + 1; i++) {
         if (architecture[i] == 0) {
             printf("    ");
@@ -22,6 +26,9 @@ void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architectur
         }
 
     }
+
+    // If in the end this node is the last son of the n-aire tree the print should be different
+    // Modify architecture in consequence
     if (sonsPass + 1 == nbParentSons) {
         printf("`-- %d ", node->value);
         architecture[node->depth + 1] = 0;
@@ -31,6 +38,8 @@ void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architectur
     }
     printf("\n");
 
+
+    // Make recursive call for each son
     for (int i = 0; i < node->nbSons; i++) {
         if (node->sons[i] == NULL) {
             fprintf(stderr, "Incohrent node->nbSons{%d}//content!\n", node->nbSons);
@@ -42,6 +51,8 @@ void printTreeRec(t_node *node, int sonsPass, int nbParentSons, int *architectur
 
 void printTree(t_tree *tree) {
     printf("Tree\n");
+
+    // int *architecture is a var to store at each time if there's still a son to go for the same node.
     int *architecture = calloc((tree->maxDepth + 1), sizeof(int));
     if (architecture == NULL) {
         fprintf(stderr, "Cannot allocate mem!\n");
@@ -51,6 +62,7 @@ void printTree(t_tree *tree) {
     printf("`-- %d\n", tree->root->value);
     architecture[0] = 0;
 
+    // Make recursive call for each son of the root
     for (int i = 0; i < tree->root->nbSons; i++) {
         printTreeRec(tree->root->sons[i], i, tree->root->nbSons, architecture);
     }
@@ -67,9 +79,11 @@ t_move *selMoves(int size) {
 
     t_move *moveArr = malloc(size * sizeof(t_move));
 
+    // Try to choose one mvt accros all 100 moves (so each move height is different)
     for (int i = 0; i < size; i++) {
         choice = rand() % sum;
 
+        // Try to find which move have been chosen and retire form the good stack.
         acc = 0;
         for (int idxMvt = 0; idxMvt < AMOUNT_MVT; idxMvt++) {
             //printf("selMvt:%d | acc:%2d | choice:%2d | acc + movePool[idxMvt]:%2d\n", idxMvt, acc, choice, acc + movePool[idxMvt]);

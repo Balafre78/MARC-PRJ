@@ -64,19 +64,10 @@ void deleteNode(t_node *node);
  * @param maxDepth Amount of mvts to use
  * @param lenArr Length of the moveArr
  * @param moveArr Array of mvts available
+ * @param iniLoc Initial location of the robot
  * @return Pointer to the Tree
  */
 t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_localisation iniLoc);
-
-/**
- * @brief Build recursivly the tree
- * @param map Map to analyse
- * @param tree Used for his properties
- * @param usedMoveArr Arr to store used mvt 1 if used 0 else
- * @param depth the depth of the partial tree root
- * @return Pointer to the completed node
- */
-t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int depth, int idxUMA, t_localisation prevLoc);
 
 /**
  * @brief Destroy a Tree in the heap
@@ -93,7 +84,7 @@ t_node *minimalNode(t_tree tree);
 
 /**
  * @brief Find a node in a tree
- * This function will use POSTFIX SEARCH (find leaves first)
+ * This function will use POSTFIX SEARCH (find leaves first) ??? not sure
  * @param node the Node
  * @param tree the Tree
  * @return a stack from root to the given node (on top)
