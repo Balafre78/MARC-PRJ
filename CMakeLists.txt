@@ -19,4 +19,6 @@ add_executable(MARC-PRJ main.c
         tree.c
         tree.h
         utils.c
-        utils.h)
+        utils.h
+        testunit.c
+        testunit.h)
