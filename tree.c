@@ -102,17 +102,17 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
 
     // Try to make the move
     t_localisation newloc;
-    if (map.soils[prevLoc.pos.y][prevLoc.pos.x] == ERG) {
-        printf("Use Reg\n");
-        newloc = ergMove(prevLoc, tree->moveArr[idxUMA]);
-        printf("End Reg\n");
-    } else {
-        newloc = move(prevLoc, tree->moveArr[idxUMA]);
+    switch (map.soils[prevLoc.pos.y][prevLoc.pos.x]) {
+        case ERG:
+            newloc = ergMove(prevLoc, tree->moveArr[idxUMA]);
+            break;
+        default:
+            newloc = move(prevLoc, tree->moveArr[idxUMA]);
+            break;
     }
 
 
     int localCost, nodeNbSons;
-
     // if the move is out the map
     if (
             newloc.pos.x < 0 ||
@@ -124,13 +124,28 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
         nodeNbSons = 0;
     } else {
         localCost = map.costs[newloc.pos.y][newloc.pos.x];
-        // If the move is too much expensive
-        if (localCost >= COST_DIE) {
-            nodeNbSons = 0;
-            localCost = COST_DIE;
 
-            // If the move is allowed by the maxdepth of the tree
-        } else if (tree->maxDepth <= depth) {
+        // modification based on soil is more reliable than costs
+        switch (map.soils[newloc.pos.y][newloc.pos.x]) {
+            case BASE_STATION:
+                nodeNbSons = 0;
+                localCost = 0;
+                break;
+            case CREVASSE:
+                nodeNbSons = 0;
+                localCost = COST_DIE;
+                break;
+        }
+
+        //// If the move is too much expensive
+        //if (localCost >= COST_DIE) {
+        //    nodeNbSons = 0;
+        //    localCost = COST_DIE;
+        //} else if (tree->maxDepth <= depth) {
+
+
+        // If the move is allowed by the maxdepth of the tree
+        if (tree->maxDepth <= depth) {
             nodeNbSons = 0;
         } else {
             // Reduce to one the possibility by the actual depth (how many move where used)
