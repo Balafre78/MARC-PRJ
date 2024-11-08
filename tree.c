@@ -112,7 +112,10 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
     }
 
 
-    int localCost, nodeNbSons;
+    // Reduce to one the possibility by the actual depth (how many move where used)
+    // and one more since one move is lock down
+    int localCost, nodeNbSons = tree->lenArr - depth - 1;
+
     // if the move is out the map
     if (
             newloc.pos.x < 0 ||
@@ -137,20 +140,9 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
                 break;
         }
 
-        //// If the move is too much expensive
-        //if (localCost >= COST_DIE) {
-        //    nodeNbSons = 0;
-        //    localCost = COST_DIE;
-        //} else if (tree->maxDepth <= depth) {
-
-
         // If the move is allowed by the maxdepth of the tree
         if (tree->maxDepth <= depth) {
             nodeNbSons = 0;
-        } else {
-            // Reduce to one the possibility by the actual depth (how many move where used)
-            // and one more since one move is lock down
-            nodeNbSons = tree->lenArr - depth - 1;
         }
     }
 
