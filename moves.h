@@ -50,4 +50,20 @@ t_localisation move(t_localisation, t_move);
  */
 void updateLocalisation(t_localisation *, t_move);
 
+/**
+ * @brief Function to rotate the robot according to a move and its actual orientation
+ * @param ori : the actual orientation of the robot
+ * @param move : the move to do
+ * @return the new orientation of the robot
+ */
+t_orientation rotate(t_orientation, t_move );
+
+/**
+ * @brief function to translate the robot according to a move and its actual position
+ * @param loc : the actual localisation of the robot
+ * @param move : the move to do
+ * @return the new localisation of the robot
+ */
+t_localisation translate(t_localisation , t_move);
+
 #endif //UNTITLED1_MOVES_H

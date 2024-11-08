@@ -49,8 +49,11 @@ void treeAutoConstructionTest(t_map map) {
 
     // Let's build a 4 depth tree with 9 movements available
     t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
-
     printf("\nEND OF BUILD\n\n");
 
+    delMoves(availMoves);
+    availMoves = NULL;
+
     printTree(bulk);
+
 }

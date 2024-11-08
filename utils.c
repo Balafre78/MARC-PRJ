@@ -104,3 +104,11 @@ t_move *selMoves(int size) {
 #endif
     return moveArr;
 }
+
+void delMoves(t_move *moveArr) {
+    free(moveArr);
+}
+
+t_localisation ergMove(t_localisation loc, t_move move) {
+
+}
