@@ -37,11 +37,19 @@ typedef struct s_tree t_tree;
 t_move *selMoves(int size);
 
 /**
- * @brief Select movements for this turn
- * @param size amount of mvts to select
- * @return an array of move
+ * @brief Delete movement array
+ * @param moveArr the movement array
  */
-t_move *delMoves(int size);
+void delMoves(t_move *moveArr);
+
+/**
+ * @brief function to update the localisation of the robot according to a move
+ * @warning this function is based on the fact the robot starts to move on erg
+ * @param loc : the localisation of the robot
+ * @param move : the move to do
+ * @return the new localisation of the robot
+ */
+t_localisation ergMove(t_localisation, t_move);
 
 /**
  * @brief Print a tree in console (stdout)

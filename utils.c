@@ -104,3 +104,37 @@ t_move *selMoves(int size) {
 #endif
     return moveArr;
 }
+
+void delMoves(t_move *moveArr) {
+    free(moveArr);
+}
+
+t_localisation ergMove(t_localisation loc, t_move mvt) {
+    t_move *ptr = &mvt;
+    switch (mvt) {
+        case F_10:
+        case B_10:
+        case T_LEFT:
+        case T_RIGHT:
+            ptr = NULL;
+            break;
+        case F_20:
+            *ptr = F_10;
+            break;
+        case F_30:
+            *ptr = F_20;
+            break;
+        case U_TURN:
+            if (rand() % 2 == 1)
+                *ptr = T_RIGHT;
+            else
+                *ptr = T_LEFT;
+            break;
+    }
+
+    if (ptr != NULL)
+        loc = move(loc, *ptr);
+
+    return loc;
+
+}
