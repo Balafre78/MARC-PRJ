@@ -101,7 +101,15 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
 
 
     // Try to make the move
-    t_localisation newloc = move(prevLoc, tree->moveArr[idxUMA]);
+    t_localisation newloc;
+    if (map.soils[prevLoc.pos.y][prevLoc.pos.x] == ERG) {
+        printf("Use Reg\n");
+        newloc = ergMove(prevLoc, tree->moveArr[idxUMA]);
+        printf("End Reg\n");
+    } else {
+        newloc = move(prevLoc, tree->moveArr[idxUMA]);
+    }
+
 
     int localCost, nodeNbSons;
 
