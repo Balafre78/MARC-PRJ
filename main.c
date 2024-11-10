@@ -45,7 +45,7 @@ int main() {
 
     nodeTest(true); // Fake tree test
 
-    treeAutoConstructionTest(map, false); // Normal build test
+    treeAutoConstructionTest(map, false); // Map tree building test
 
 
     return 0;

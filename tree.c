@@ -52,12 +52,12 @@ t_node *createNode(int value, int depth, int nbSons) {
     return ptr;
 }
 
-void deleteNode(t_node *node) {
+void deleteNodeRec(t_node *node) {
     if (node->nbSons > 0) {
         // Delete recursively all sons
         for (int i = 0; i < node->nbSons; i++)
             if (node->sons[i] != NULL)
-                deleteNode(node->sons[i]);
+                deleteNodeRec(node->sons[i]);
 
         free(node->sons);
         node->sons = NULL;
@@ -178,6 +178,13 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
     return ptr;
 }
 
+void deleteTree(t_tree *tree)
+{
+    deleteNodeRec(tree->root);
+    delMoves(tree->moveArr);
+    free(tree);
+}
+
 t_node *minimalNodeRec(t_node *node, t_node *currentMin)
 {
     if (node == NULL) return currentMin;
@@ -186,6 +193,9 @@ t_node *minimalNodeRec(t_node *node, t_node *currentMin)
     if (currentMin == NULL || node->value < currentMin->value) {
         currentMin = node;
     }
+
+    // No node with value under 0
+    if(currentMin != NULL && currentMin->value == 0) return currentMin;
 
     // Browsing all the sons of the current node
     for (int i = 0; i < node->nbSons; i++) {
@@ -199,4 +209,9 @@ t_node *minimalNode(t_tree tree)
 {
     if(tree.root == NULL) return NULL;
     return minimalNodeRec(tree.root, NULL);
+}
+
+t_stack findNodePath(t_node *node, t_tree tree)
+{
+
 }

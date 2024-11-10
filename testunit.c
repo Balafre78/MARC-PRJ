@@ -43,8 +43,6 @@ void nodeTest(bool displayTree) {
     t_node *minNode = minimalNode(faketree);
     printf("Minimal node address : %p\n", minNode);
     printf("Minimal node value : %d\n", minNode->value);
-
-    deleteNode(root->sons[2]);
 }
 
 void treeAutoConstructionTest(t_map map, bool displayTree) {
@@ -58,13 +56,12 @@ void treeAutoConstructionTest(t_map map, bool displayTree) {
     t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
     printf("End building!\n");
 
-    delMoves(availMoves);
-    availMoves = NULL;
-
     if(displayTree) printTree(bulk);
 
     t_node *minNode = minimalNode(*bulk);
     printf("Minimal node address : %p\n", minNode);
     printf("Minimal node value : %d\n", minNode->value);
 
+    deleteTree(bulk);
+    bulk = NULL;
 }

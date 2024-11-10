@@ -56,7 +56,7 @@ t_node *createNode(int value, int depth, int nbSons);
  * @brief Destroy a node in the heap
  * @param node The node to delete
  */
-void deleteNode(t_node *node);
+void deleteNodeRec(t_node *node);
 
 /**
  * @brief Build the combinatory tree
@@ -73,7 +73,7 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
  * @brief Destroy a Tree in the heap
  * @param tree The tree to delete
  */
-void deleteTree(t_node *tree);
+void deleteTree(t_tree *tree);
 
 /**
  * @brief Find the minimal value in Tree
