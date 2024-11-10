@@ -6,6 +6,7 @@
 #define MARC_PRJ_UTILS_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "moves.h"
 #include "tree.h"
@@ -22,9 +23,9 @@ typedef struct s_tree t_tree;
 #endif
 
 // Define with macro how to describe the base distribution of moves.
-#define AMOUNT_MVT 7
-#define ARR_MOVEPOOL { 22, 15, 7, 7, 21, 21, 7}
-#define BASE_SUM 100
+#define NB_MVT_TYPE 7
+#define ARR_MVT_POOL { 22, 15, 7, 7, 21, 21, 7}
+#define BASE_MVT_SUM 100
 
 // Debug flag macro - help for debugging stuff
 //#define DEBUG

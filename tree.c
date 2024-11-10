@@ -5,7 +5,7 @@
 #include "tree.h"
 
 /**
- * @brief Build recursivly the tree
+ * @brief Build recursively the tree
  * @param map Map to analyse
  * @param tree Used for his properties
  * @param usedMoveArr Arr to store used mvt 1 if used 0 else
@@ -15,6 +15,14 @@
  * @return Pointer to the completed node
  */
 t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc);
+
+/**
+ * @brief Search recursively the minimal node
+ * @param node Node to compare
+ * @param currentMin Node to compare with
+ * @return The minimal node
+ */
+t_node *minimalNodeRec(t_node *node, t_node *currentMin);
 
 t_node *createNode(int value, int depth, int nbSons) {
     t_node *ptr = malloc(sizeof(t_node));
@@ -168,4 +176,27 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
     // UNLOCK THE MOVE
     usedMoveArr[idxUMA] = 0;
     return ptr;
+}
+
+t_node *minimalNodeRec(t_node *node, t_node *currentMin)
+{
+    if (node == NULL) return currentMin;
+
+    // If no currentMin node defined or finding a new minimal node
+    if (currentMin == NULL || node->value < currentMin->value) {
+        currentMin = node;
+    }
+
+    // Browsing all the sons of the current node
+    for (int i = 0; i < node->nbSons; i++) {
+        currentMin = minimalNodeRec(node->sons[i], currentMin);
+    }
+
+    return currentMin;
+}
+
+t_node *minimalNode(t_tree tree)
+{
+    if(tree.root == NULL) return NULL;
+    return minimalNodeRec(tree.root, NULL);
 }

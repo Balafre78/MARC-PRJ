@@ -4,7 +4,8 @@
 
 #include "testunit.h"
 
-void nodeTest() {
+void nodeTest(bool displayTree) {
+    printf("\nFAKE TREE TEST\n");
     t_node *root = createNode(COST_UNDEF, -1, 3);
 
     t_node *left = createNode(0, 0, 2);
@@ -37,24 +38,33 @@ void nodeTest() {
     root->sons[2]->sons[1]->sons[0] = createNode(0, 2, 0);
 
     t_tree faketree = {root, 3, NULL, 2};
-    printTree(&faketree);
+    if(displayTree) printTree(&faketree);
 
+    t_node *minNode = minimalNode(faketree);
+    printf("Minimal node address : %p\n", minNode);
+    printf("Minimal node value : %d\n", minNode->value);
 
     deleteNode(root->sons[2]);
 }
 
-void treeAutoConstructionTest(t_map map) {
+void treeAutoConstructionTest(t_map map, bool displayTree) {
+    printf("\nMAP TREE BUILDING TEST\n");
     t_move *availMoves = selMoves(9);
     t_localisation initLoc = loc_init(4,5, NORTH);
     //t_localisation initLoc = loc_init(0,1, EAST);
 
     // Let's build a 4 depth tree with 9 movements available
+    printf("Building...\n");
     t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
-    printf("\nEND OF BUILD\n\n");
+    printf("End building!\n");
 
     delMoves(availMoves);
     availMoves = NULL;
 
-    printTree(bulk);
+    if(displayTree) printTree(bulk);
+
+    t_node *minNode = minimalNode(*bulk);
+    printf("Minimal node address : %p\n", minNode);
+    printf("Minimal node value : %d\n", minNode->value);
 
 }

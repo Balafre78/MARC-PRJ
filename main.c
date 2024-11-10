@@ -43,9 +43,9 @@ int main() {
 
     // Test units
 
-    nodeTest();
+    nodeTest(true); // Fake tree test
 
-    treeAutoConstructionTest(map);
+    treeAutoConstructionTest(map, false); // Normal build test
 
 
     return 0;

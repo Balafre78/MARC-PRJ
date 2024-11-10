@@ -12,13 +12,15 @@
 
 /**
  * @brief Unit to test Tree with manual construction.
+ * @param displayTree Display tree or not
  */
-void nodeTest();
+void nodeTest(bool displayTree);
 
 /**
  * @brief Unit to test Tree with automated construction.
- * @param map to test
+ * @param map The map to test building
+ * @param displayTree Display tree or not
  */
-void treeAutoConstructionTest(t_map map);
+void treeAutoConstructionTest(t_map map, bool displayTree);
 
 #endif //MARC_PRJ_TESTUNIT_H

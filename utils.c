@@ -72,20 +72,21 @@ void printTree(t_tree *tree) {
 }
 
 t_move *selMoves(int size) {
-    int movePool[AMOUNT_MVT] = ARR_MOVEPOOL;
+    int movePool[NB_MVT_TYPE] = ARR_MVT_POOL;
 
     int choice, acc, sum;
-    sum = BASE_SUM;
+    sum = BASE_MVT_SUM;
 
+    // Allocation of the array storing selected movements
     t_move *moveArr = malloc(size * sizeof(t_move));
 
-    // Try to choose one mvt accros all 100 moves (so each move height is different)
+    // Try to choose one mvt across all (sum - already selected) moves
     for (int i = 0; i < size; i++) {
         choice = rand() % sum;
 
         // Try to find which move have been chosen and retire form the good stack.
         acc = 0;
-        for (int idxMvt = 0; idxMvt < AMOUNT_MVT; idxMvt++) {
+        for (int idxMvt = 0; idxMvt < NB_MVT_TYPE; idxMvt++) {
             //printf("selMvt:%d | acc:%2d | choice:%2d | acc + movePool[idxMvt]:%2d\n", idxMvt, acc, choice, acc + movePool[idxMvt]);
             if (acc <= choice && choice < acc + movePool[idxMvt]) {
                 movePool[idxMvt]--;
