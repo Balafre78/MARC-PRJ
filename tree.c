@@ -14,7 +14,7 @@
  * @param prevLoc the previous location of the robot
  * @return Pointer to the completed node
  */
-t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc);
+t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc);
 
 /**
  * @brief Search recursively the minimal node
@@ -23,6 +23,12 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
  * @return The minimal node
  */
 t_node *minimalNodeRec(t_node *node, t_node *currentMin);
+
+/**
+ * @brief Destroy a node and all his children in the heap
+ * @param node The node to delete
+ */
+void deleteNodeRec(t_node *node);
 
 t_node *createNode(int value, int depth, int nbSons) {
     t_node *ptr = malloc(sizeof(t_node));
@@ -77,7 +83,7 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
     tree->maxDepth = maxDepth;
 
     // int *usedMoveArr is an array to store if the move have been used 0 if unused 1 else
-    int *usedMoveArr = calloc(lenArr, sizeof(int));
+    bool *usedMoveArr = calloc(lenArr, sizeof(bool));
     if (usedMoveArr == NULL) {
         fprintf(stderr, "Cannot allocate mem!\n");
         exit(EXIT_FAILURE);
@@ -93,11 +99,11 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
     return tree;
 }
 
-t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc) {
+t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc) {
     t_node *ptr;
 
     // LOCK THE MOVE
-    usedMoveArr[idxUMA] = 1;
+    usedMoveArr[idxUMA] = true;
 
 #ifdef DEBUG
     printf("usedMoveArr[idxUMA]: ");
@@ -163,7 +169,7 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
         for (int i = 0; i < tree->lenArr; i++) {
 
             // Does the move is already used ?
-            if (usedMoveArr[i] == 0) {
+            if (usedMoveArr[i] == false) {
                 ptr->sons[i - d] = buildTreeRec(map, tree, usedMoveArr, i, depth + 1, newloc);
             } else {
                 // Cannot create this son since the move is lock down
@@ -174,7 +180,7 @@ t_node *buildTreeRec(t_map map, t_tree *tree, int *usedMoveArr, int idxUMA, int 
     }
 
     // UNLOCK THE MOVE
-    usedMoveArr[idxUMA] = 0;
+    usedMoveArr[idxUMA] = false;
     return ptr;
 }
 
@@ -213,5 +219,7 @@ t_node *minimalNode(t_tree tree)
 
 t_stack findNodePath(t_node *node, t_tree tree)
 {
-
+    t_stack path = createStack(tree.maxDepth);
+    //TODO t_stack is not adapted to store t_node pointers! Modifying given code ?
+    return path;
 }

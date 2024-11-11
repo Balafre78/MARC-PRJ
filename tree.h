@@ -53,12 +53,6 @@ typedef struct s_tree {
 t_node *createNode(int value, int depth, int nbSons);
 
 /**
- * @brief Destroy a node in the heap
- * @param node The node to delete
- */
-void deleteNodeRec(t_node *node);
-
-/**
  * @brief Build the combinatory tree
  * @param map Map to analyse
  * @param maxDepth Amount of mvts to use
