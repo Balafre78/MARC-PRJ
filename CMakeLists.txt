@@ -21,4 +21,6 @@ add_executable(MARC-PRJ main.c
         utils.c
         utils.h
         testunit.c
-        testunit.h)
+        testunit.h
+        node.c
+        node.h)

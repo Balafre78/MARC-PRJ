@@ -5,12 +5,14 @@
 #ifndef UNTITLED1_STACK_H
 #define UNTITLED1_STACK_H
 
+#include "node.h"
+
 /**
- * @brief Structure for the stack of integers
+ * @brief Structure for the stack of t_node*
  */
 typedef struct s_stack
 {
-    int *values;
+    t_node **values;
     int size;
     int nbElts;
 } t_stack;
@@ -28,21 +30,28 @@ t_stack createStack(int);
  * @param value : the value to push
  * @return none
  */
-void push(t_stack *, int);
+void push(t_stack *, t_node *);
 
 /**
  * @brief Function to pop a value from the stack
  * @param : pointer to the stack
  * @return the value popped
  */
-int pop(t_stack *);
+t_node* pop(t_stack *);
 
 /**
  * @brief Function to get the top value of the stack
  * @param stack : the stack
  * @return the top value
  */
-int top(t_stack);
+t_node* top(t_stack);
+
+/**
+ * @brief Display the stack nodes value
+ * @param stack : the stack
+ * @return none
+ */
+void displayStack(t_stack);
 
 
 #endif //UNTITLED1_STACK_H

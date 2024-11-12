@@ -10,17 +10,11 @@
 
 #include "moves.h"
 #include "map.h"
-#include "stack.h"
 #include "queue.h"
+#include "stack.h"
 #include "utils.h"
+#include "node.h"
 
-
-typedef struct s_node {
-    int value;            // Final point reached in value
-    int depth;            // Depth of the tree
-    int nbSons;           // Amount of sons
-    struct s_node **sons; // Link to sons ALWAYS SORTED IN RIGHT ORDER
-} t_node;
 
 typedef struct s_tree {
     t_node *root;       // Root of the tree
@@ -41,16 +35,6 @@ typedef struct s_tree {
  * Etape 1
 
 */
-
-
-/**
- * @brief Create a node in the heap
- * @param value Value of node
- * @param depth Depth of node from root of the tree
- * @param nbSons Amount of sons to populate
- * @return Pointer to the node
- */
-t_node *createNode(int value, int depth, int nbSons);
 
 /**
  * @brief Build the combinatory tree
