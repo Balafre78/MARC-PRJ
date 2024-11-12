@@ -192,9 +192,9 @@ t_node *minimalNode(t_tree tree)
 
 t_stack findNodePath(t_node *node, t_tree tree)
 {
-    t_stack path = createStack(tree.maxDepth);
+    t_stack path = createStack(tree.maxDepth+1);
     t_node *cursor = node;
-    while(node != tree.root) {
+    while(cursor != tree.root) {
         push(&path, cursor);
         cursor = cursor->parent;
     }

@@ -53,15 +53,16 @@ void treeAutoConstructionTest(t_map map, bool displayTree) {
 
     // Let's build a 4 depth tree with 9 movements available
     printf("Building...\n");
-    t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
+    t_tree *bulk = buildTree(map, 5, 9, availMoves, initLoc);
     printf("End building!\n");
 
-    if(true) printTree(bulk);
+    if(displayTree) printTree(bulk);
 
     t_node *minNode = minimalNode(*bulk);
     printf("Minimal node address : %p\n", minNode);
     printf("Minimal node value : %d\n", minNode->value);
-
+    t_stack path = findNodePath(minNode, *bulk);
+    displayStack(path);
     deleteTree(bulk);
     bulk = NULL;
 }
