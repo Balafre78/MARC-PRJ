@@ -17,7 +17,7 @@ typedef struct s_tree t_tree;
 
 // Define the seed either with predefined SEED macro or with some randomness
 // Decomment SEED macro to use fix seed for random generation
-//#define SEED 1730810125
+#define SEED 1730810125
 #ifndef SEED
 #include <time.h>
 #endif

@@ -6,36 +6,36 @@
 
 void nodeTest(bool displayTree) {
     printf("\nFAKE TREE TEST\n");
-    t_node *root = createNode(COST_UNDEF, -1, 3);
+    t_node *root = createNode(COST_UNDEF, -1, 3, NULL);
 
-    t_node *left = createNode(0, 0, 2);
-    t_node *mid = createNode(1, 0, 2);
-    t_node *right = createNode(2, 0, 2);
+    t_node *left = createNode(0, 0, 2, NULL);
+    t_node *mid = createNode(1, 0, 2, NULL);
+    t_node *right = createNode(2, 0, 2, NULL);
 
     root->sons[0] = left;
     root->sons[1] = mid;
     root->sons[2] = right;
 
-    root->sons[0]->sons[0] = createNode(1, 1, 1);
-    root->sons[0]->sons[1] = createNode(2, 1, 1);
+    root->sons[0]->sons[0] = createNode(1, 1, 1, NULL);
+    root->sons[0]->sons[1] = createNode(2, 1, 1, NULL);
 
-    root->sons[1]->sons[0] = createNode(0, 1, 1);
-    root->sons[1]->sons[1] = createNode(2, 1, 1);
+    root->sons[1]->sons[0] = createNode(0, 1, 1, NULL);
+    root->sons[1]->sons[1] = createNode(2, 1, 1, NULL);
 
-    root->sons[2]->sons[0] = createNode(0, 1, 1);
-    root->sons[2]->sons[1] = createNode(1, 1, 1);
+    root->sons[2]->sons[0] = createNode(0, 1, 1, NULL);
+    root->sons[2]->sons[1] = createNode(1, 1, 1, NULL);
 
-    root->sons[0]->sons[0]->sons[0] = createNode(2, 2, 0);
+    root->sons[0]->sons[0]->sons[0] = createNode(2, 2, 0, NULL);
 
-    root->sons[0]->sons[1]->sons[0] = createNode(1, 2, 0);
+    root->sons[0]->sons[1]->sons[0] = createNode(1, 2, 0, NULL);
 
-    root->sons[1]->sons[0]->sons[0] = createNode(2, 2, 0);
+    root->sons[1]->sons[0]->sons[0] = createNode(2, 2, 0, NULL);
 
-    root->sons[1]->sons[1]->sons[0] = createNode(0, 2, 0);
+    root->sons[1]->sons[1]->sons[0] = createNode(0, 2, 0, NULL);
 
-    root->sons[2]->sons[0]->sons[0] = createNode(1, 2, 0);
+    root->sons[2]->sons[0]->sons[0] = createNode(1, 2, 0, NULL);
 
-    root->sons[2]->sons[1]->sons[0] = createNode(0, 2, 0);
+    root->sons[2]->sons[1]->sons[0] = createNode(0, 2, 0, NULL);
 
     t_tree faketree = {root, 3, NULL, 2};
     if(displayTree) printTree(&faketree);
@@ -56,7 +56,7 @@ void treeAutoConstructionTest(t_map map, bool displayTree) {
     t_tree *bulk = buildTree(map, 4, 9, availMoves, initLoc);
     printf("End building!\n");
 
-    if(displayTree) printTree(bulk);
+    if(true) printTree(bulk);
 
     t_node *minNode = minimalNode(*bulk);
     printf("Minimal node address : %p\n", minNode);

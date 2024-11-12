@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "node.h"
 
-t_node *createNode(int value, int depth, int nbSons) {
+t_node *createNode(int value, int depth, int nbSons, t_node *parent) {
     t_node *ptr = malloc(sizeof(t_node));
     if (ptr == NULL) {
         fprintf(stderr, "Cannot allocate mem!\n");
@@ -16,6 +16,7 @@ t_node *createNode(int value, int depth, int nbSons) {
     ptr->value = value;
     ptr->depth = depth;
     ptr->nbSons = nbSons;
+    ptr->parent = parent;
 
     if (nbSons > 0) {
         ptr->sons = malloc(nbSons * sizeof(t_node **));

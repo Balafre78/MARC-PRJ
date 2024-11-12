@@ -6,10 +6,11 @@
 #define MARC_PRJ_NODE_H
 
 typedef struct s_node {
-    int value;            // Final point reached in value
-    int depth;            // Depth of the tree
-    int nbSons;           // Amount of sons
-    struct s_node **sons; // Link to sons ALWAYS SORTED IN RIGHT ORDER
+    int value;             // Final point reached in value
+    int depth;             // Depth of the tree
+    int nbSons;            // Amount of sons
+    struct s_node **sons;  // Link to sons ALWAYS SORTED IN RIGHT ORDER
+    struct s_node *parent; // Parent node - NULL for root
 } t_node;
 
 /**
@@ -17,9 +18,10 @@ typedef struct s_node {
  * @param value Value of node
  * @param depth Depth of node from root of the tree
  * @param nbSons Amount of sons to populate
+ * @param parent Parent of the node
  * @return Pointer to the node
  */
-t_node *createNode(int value, int depth, int nbSons);
+t_node *createNode(int value, int depth, int nbSons, t_node *parent);
 
 
 

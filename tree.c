@@ -6,15 +6,15 @@
 
 /**
  * @brief Build recursively the tree
+ * @param parent The node parent
  * @param map Map to analyse
  * @param tree Used for his properties
  * @param usedMoveArr Arr to store used mvt 1 if used 0 else
  * @param idxUMA the index in the @param usedMoveArr to known which move will choose the robot for its next move
- * @param depth the depth of the partial tree root
  * @param prevLoc the previous location of the robot
  * @return Pointer to the completed node
  */
-t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc);
+t_node *buildTreeRec(t_node *parent, t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, t_localisation prevLoc);
 
 /**
  * @brief Search recursively the minimal node
@@ -39,6 +39,7 @@ void deleteNodeRec(t_node *node) {
 
         free(node->sons);
         node->sons = NULL;
+        node->parent = NULL;
     }
     free(node);
 }
@@ -62,16 +63,16 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
     }
 
     // The value of the first node should be undefined and it's not important ; depth is -1
-    tree->root = createNode(COST_UNDEF, -1, lenArr);
+    tree->root = createNode(COST_UNDEF, -1, lenArr, NULL);
     for (int i = 0; i < lenArr; i++) {
         // Force to generate each possible sons
-        tree->root->sons[i] = buildTreeRec(map, tree, usedMoveArr, i, 0, iniLoc);
+        tree->root->sons[i] = buildTreeRec(tree->root, map, tree, usedMoveArr, i, iniLoc);
     }
 
     return tree;
 }
 
-t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int depth, t_localisation prevLoc) {
+t_node *buildTreeRec(t_node *parent, t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, t_localisation prevLoc) {
     t_node *ptr;
 
     // LOCK THE MOVE
@@ -100,7 +101,7 @@ t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int
 
     // Reduce to one the possibility by the actual depth (how many move where used)
     // and one more since one move is lock down
-    int localCost, nodeNbSons = tree->lenArr - depth - 1;
+    int localCost, nodeNbSons = tree->lenArr - parent->depth - 2;
 
     // if the move is out the map
     if (
@@ -127,12 +128,12 @@ t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int
         }
 
         // If the move is allowed by the maxdepth of the tree
-        if (tree->maxDepth <= depth) {
+        if (tree->maxDepth <= parent->depth + 1) {
             nodeNbSons = 0;
         }
     }
 
-    ptr = createNode(localCost, depth, nodeNbSons);
+    ptr = createNode(localCost, parent->depth + 1, nodeNbSons, parent);
 
     if (nodeNbSons > 0) {
         int d = 0; // the shift
@@ -142,7 +143,7 @@ t_node *buildTreeRec(t_map map, t_tree *tree, bool *usedMoveArr, int idxUMA, int
 
             // Does the move is already used ?
             if (usedMoveArr[i] == false) {
-                ptr->sons[i - d] = buildTreeRec(map, tree, usedMoveArr, i, depth + 1, newloc);
+                ptr->sons[i - d] = buildTreeRec(ptr, map, tree, usedMoveArr, i, newloc);
             } else {
                 // Cannot create this son since the move is lock down
                 // so the shift increments
@@ -192,6 +193,10 @@ t_node *minimalNode(t_tree tree)
 t_stack findNodePath(t_node *node, t_tree tree)
 {
     t_stack path = createStack(tree.maxDepth);
-    //TODO t_stack is not adapted to store t_node pointers! Modifying given code ?
+    t_node *cursor = node;
+    while(node != tree.root) {
+        push(&path, cursor);
+        cursor = cursor->parent;
+    }
     return path;
 }
