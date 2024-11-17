@@ -5,7 +5,12 @@
 #ifndef UNTITLED1_MAP_H
 #define UNTITLED1_MAP_H
 
+#define SLOPE_OPT
 #define COST_UNDEF 65535
+#define COST_DIE 10000
+
+#include "slope.h"
+
 /**
  * @brief Enum for the possible soils of the map
  */
@@ -21,7 +26,7 @@ typedef enum e_soil
 /**
  * @brief Array of costs for the soils
  */
-static const int _soil_cost[5] = {0, 1, 2, 4, 10000};
+static const int _soil_cost[5] = {0, 1, 2, 4, COST_DIE};
 
 /**
  * @brief Structure for the map
@@ -33,6 +38,9 @@ typedef struct s_map
     int     **costs;
     int     x_max;
     int     y_max;
+#ifdef SLOPE_OPT
+    t_slopeOrientation **slopes;
+#endif
 } t_map;
 
 /**

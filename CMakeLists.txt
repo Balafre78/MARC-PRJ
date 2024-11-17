@@ -3,7 +3,7 @@ project(MARC-PRJ C)
 
 set(CMAKE_C_STANDARD 11)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wfatal-errors")
 
 add_executable(MARC-PRJ main.c
         loc.c
@@ -23,4 +23,6 @@ add_executable(MARC-PRJ main.c
         testunit.c
         testunit.h
         node.c
-        node.h)
+        node.h
+        slope.c
+        slope.h)

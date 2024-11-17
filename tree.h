@@ -81,35 +81,15 @@ t_stack findNodePath(t_node *node, t_tree tree);
 
 */
 
-
 /**
- * @brief Build the minimal tree
+ * @brief Build the combinatory tree
  * @param map Map to analyse
  * @param maxDepth Amount of mvts to use
  * @param lenArr Length of the moveArr
  * @param moveArr Array of mvts available
+ * @param iniLoc Initial location of the robot
  * @return Pointer to the Tree
  */
-t_tree *buildMinimalTree(t_map map, int maxDepth, int lenArr, t_move *moveArr);
-
-/**
- * @brief Build the combinatory tree, implement slope
- * @param map Map to analyse
- * @param maxDepth Amount of mvts to use
- * @param lenArr Length of the moveArr
- * @param moveArr Array of mvts available
- * @return Pointer to the Tree
- */
-t_tree *buildSlopeTree(t_map map, int maxDepth, int lenArr, t_move *moveArr);
-
-/**
- * @brief Build the minimal tree, implement slope
- * @param map Map to analyse
- * @param maxDepth Amount of mvts to use
- * @param lenArr Length of the moveArr
- * @param moveArr Array of mvts available
- * @return Pointer to the Tree
- */
-t_tree *buildMinimalSlopeTree(t_map map, int maxDepth, int lenArr, t_move *moveArr);
+t_tree *buildSlopeTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_localisation iniLoc);
 
 #endif //MARC_PRJ_TREE_H
