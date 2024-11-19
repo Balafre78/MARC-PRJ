@@ -27,10 +27,9 @@ void treeAutoConstructionTest(t_map map, bool displayTree);
  * @brief Unit to test Tree with automated construction.
  * @param map The map to test building
  * @param displayTree Display tree or not
- * @param lenMvtArr
- * @param MvtArr
- * @param locInit
- * @param MvtArr
+ * @param lenMvtArr The len of @param mvtArr
+ * @param mvtArr The available move to execute
+ * @param locInit The initial localisation
  */
 void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int lenMvtArr, t_move *mvtArr, t_localisation locInit);
 
