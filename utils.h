@@ -10,10 +10,9 @@
 
 #include "moves.h"
 #include "tree.h"
+#include "map.h"
 
 typedef struct s_tree t_tree;
-
-#define COST_DIE 1000
 
 // Define the seed either with predefined SEED macro or with some randomness
 // Decomment SEED macro to use fix seed for random generation

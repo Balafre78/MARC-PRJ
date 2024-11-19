@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "slope.h"
 #include "map.h"
 #include "loc.h"
 #include "queue.h"
@@ -78,7 +79,7 @@ void removeFalseCrevasses(t_map map)
         {
             for (int j=0; j<map.x_max; j++)
             {
-                if (map.soils[i][j] != CREVASSE && map.costs[i][j] > 10000 && map.costs[i][j] < min_cost)
+                if (map.soils[i][j] != CREVASSE && map.costs[i][j] > COST_DIE && map.costs[i][j] < min_cost)
                 {
                     min_cost = map.costs[i][j];
                     imin = i;
@@ -244,6 +245,11 @@ t_map createMapFromFile(char *filename)
     fclose(file);
     calculateCosts(map);
     removeFalseCrevasses(map);
+#ifdef SLOPE_OPT
+    printf("Calc Slopes\n");
+    createSlopeArrFromFile(map, filename);
+    printf("Successfully calculate Slopes\n");
+#endif
     return map;
 }
 

@@ -66,3 +66,22 @@ void treeAutoConstructionTest(t_map map, bool displayTree) {
     deleteTree(bulk);
     bulk = NULL;
 }
+
+void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int lenMvtArr, t_move *mvtArr, t_localisation locInit) {
+    printf("\nMAP TREE BUILDING TEST\n");
+
+    // Let's build a 4 depth tree with lenMvtArr movements available
+    printf("Building...\n");
+    t_tree *bulk = buildTree(map, 5, lenMvtArr, mvtArr, locInit);
+    printf("End building!\n");
+
+    if(displayTree) printTree(bulk);
+
+    t_node *minNode = minimalNode(*bulk);
+    printf("Minimal node address : %p\n", minNode);
+    printf("Minimal node value : %d\n", minNode->value);
+    t_stack path = findNodePath(minNode, *bulk);
+    displayStack(path);
+    deleteTree(bulk);
+    bulk = NULL;
+}
