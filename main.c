@@ -47,6 +47,10 @@ int main() {
 
     treeAutoConstructionTest(map, false); // Map tree building test
 
+    int lenMvtArr = 4;
+    t_move mvtArr[4] = {F_10, T_RIGHT, T_LEFT, F_10};
+    t_localisation loc = {3,3, NORTH};
+    treeAutoConstructionPreDefinedMvtSetTest(map, true, lenMvtArr, mvtArr, loc);
 
     return 0;
 }

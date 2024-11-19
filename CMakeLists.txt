@@ -3,7 +3,7 @@ project(MARC-PRJ C)
 
 set(CMAKE_C_STANDARD 11)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wfatal-errors")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 
 add_executable(MARC-PRJ main.c
         loc.c

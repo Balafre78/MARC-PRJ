@@ -23,4 +23,15 @@ void nodeTest(bool displayTree);
  */
 void treeAutoConstructionTest(t_map map, bool displayTree);
 
+/**
+ * @brief Unit to test Tree with automated construction.
+ * @param map The map to test building
+ * @param displayTree Display tree or not
+ * @param lenMvtArr
+ * @param MvtArr
+ * @param locInit
+ * @param MvtArr
+ */
+void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int lenMvtArr, t_move *mvtArr, t_localisation locInit);
+
 #endif //MARC_PRJ_TESTUNIT_H

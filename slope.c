@@ -54,38 +54,13 @@ void createSlopeArrFromFile(t_map map, char *filename) {
         map.slopes[i] = (t_slopeOrientation *) malloc(xdim * sizeof(t_slopeOrientation));
     }
 
-    int buffptr = -1;
-
-    do {
-        // Read single character from file
-        buff[buffptr + 1] = fgetc(file);
-        buffptr++;
-        printf("%c", buff[buffptr]);
-    } while(buff[buffptr] != '\n' && buff[buffptr] != ' ');
-    buffptr = -1;
-
     int value;
     for (int i = 0; i < ydim; i++) {
         // parse the line to get the values : 0 = NO_SLOPE, 1 = S_RIGHT, 2 = S_UP, 3 = S_LEFT, 4 = S_DOWN
         // values are separated by spaces, so we use sscanf with %d to get the values
         for (int j = 0; j < xdim; j++) {
-            // fscanf is locked on the last digit of the first line
-            //printf("(%2d)--", fscanf(file, "%d", &value));
-            do {
-                // Read single character from file
-                buff[buffptr + 1] = fgetc(file);
-                buffptr++;
-                printf("%c", buff[buffptr]);
-                if (buff[buffptr] == EOF) {
-                    printf("%d %d\n", ferror(file), feof(file));
-                    perror("Err");
-                    exit(1);
-                }
-            } while(buff[buffptr] != '\n' && buff[buffptr] != ' ');
-            buff[buffptr] = '\0';
-            buffptr = -1;
 
-            sscanf(buff, "%d", &value);
+            fscanf(file, "%d", &value);
 
             map.slopes[i][j] = value;
             printf("%d@(%d,%d)\n", value, j, i);
@@ -117,7 +92,6 @@ void createSlopeArrFromFile(t_map map, char *filename) {
             }
 
         }
-        fclose(file);
-        //free(fullFilename);
     }
+    fclose(file);
 }
