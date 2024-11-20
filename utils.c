@@ -140,7 +140,7 @@ t_localisation ergMove(t_localisation loc, t_move mvt) {
 
 }
 
-
+//TODO later
 bool verifyCrevasses(int x, int y, t_map map)
 {
     if (map.soils[x][y] == CREVASSE)

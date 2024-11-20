@@ -20,8 +20,27 @@ void run()
     t_move* moves = selMoves(9);
     t_tree* tree;
     tree = buildTree(map, MAX_DEPTH, LEN_MOVE, moves, init_position);
-    printTree(tree);
+    //printTree(tree);
 
+    // Finding path
+    t_node* minimal_node = minimalNode(*tree);
+    t_stack path = findNodePath(minimal_node, *tree);
+    displayStack(path);
+
+    int count = 0;
+    while(path.size > 0)
+    {
+
+        if(tree->root->sons == path.values)
+        {
+
+
+            pop(&path);
+            int count = 0;
+        }
+        else
+            count++;
+    }
 
 }
 
