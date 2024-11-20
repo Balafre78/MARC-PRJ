@@ -3,6 +3,29 @@
 #include "utils.h"
 #include "testunit.h"
 
+#define MAX_DEPTH 5
+#define LEN_MOVE 9
+
+void run()
+{
+    //TODO
+    t_map map;
+    map = createMapFromFile("..\\maps\\example1.map");
+    displayMap(map);
+
+    t_localisation init_position;
+    //init_position = giveStartLocation();
+    init_position = loc_init(0, 0, NORTH);
+
+    t_move* moves = selMoves(9);
+    t_tree* tree;
+    tree = buildTree(map, MAX_DEPTH, LEN_MOVE, moves, init_position);
+    printTree(tree);
+
+
+}
+
+
 int main() {
 
     // Define the seed either with predefined SEED macro or with some randomness from time
@@ -42,7 +65,7 @@ int main() {
 
 
     // Test units
-
+    /*
     nodeTest(true); // Fake tree test
 
     treeAutoConstructionTest(map, false); // Map tree building test
@@ -52,10 +75,9 @@ int main() {
     t_localisation loc = {3,3, NORTH};
     treeAutoConstructionPreDefinedMvtSetTest(map, true, lenMvtArr, mvtArr, loc);
 
-    return 0;
-}
+    */
+    run();
 
-void run()
-{
-    //TODO
+
+    return 0;
 }
