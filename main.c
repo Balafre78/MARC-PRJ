@@ -31,9 +31,8 @@ void run()
     while(path.size > 0)
     {
 
-        if(tree->root->sons == path.values)
+        if(&tree->root->sons[count] == path.values)
         {
-
 
             pop(&path);
             int count = 0;
