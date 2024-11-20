@@ -5,7 +5,7 @@
 #ifndef UNTITLED1_MAP_H
 #define UNTITLED1_MAP_H
 
-#define SLOPE_OPT
+//#define SLOPE_OPT
 #define COST_UNDEF 65535
 #define COST_DIE 10000
 
@@ -38,9 +38,7 @@ typedef struct s_map
     int     **costs;
     int     x_max;
     int     y_max;
-#ifdef SLOPE_OPT
     t_slopeOrientation **slopes;
-#endif
 } t_map;
 
 /**

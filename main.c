@@ -6,41 +6,76 @@
 #define MAX_DEPTH 5
 #define LEN_MOVE 9
 
-void run()
-{
+void run() {
     //TODO
     t_map map;
+#if defined(_WIN32) || defined(_WIN64)
     map = createMapFromFile("..\\maps\\example1.map");
-    displayMap(map);
+#else
+    map = createMapFromFile("../maps/example1.map");
+#endif
+    //displayMap(map);
 
-    t_localisation init_position;
-    //init_position = giveStartLocation();
-    init_position = loc_init(0, 0, NORTH);
+    t_localisation initPosition;
+    initPosition = giveStartLocation(map);
 
-    t_move* moves = selMoves(9);
-    t_tree* tree;
-    tree = buildTree(map, MAX_DEPTH, LEN_MOVE, moves, init_position);
+    t_move *moves = selMoves(9);
+    t_tree *tree;
+    tree = buildTree(map, MAX_DEPTH, LEN_MOVE, moves, initPosition);
+
+    printf("Available moves :\n");
+    for (int i = 0; i < tree->lenArr; i++)
+        printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[i]));
+
     //printTree(tree);
 
     // Finding path
-    t_node* minimal_node = minimalNode(*tree);
+    t_node *minimal_node = minimalNode(*tree);
     t_stack path = findNodePath(minimal_node, *tree);
     displayStack(path);
 
-    int count = 0;
-    while(path.size > 0)
-    {
+    t_move *mvtArr = malloc(path.nbElts * sizeof(t_move));
+    int *structMvtArr = calloc(path.nbElts, sizeof(t_move));
 
-        if(&tree->root->sons[count] == path.values)
-        {
+    int passSons;
+    int idxMvtArr = 0;
+    t_node *nodePtr = tree->root;
+    while (path.nbElts > 0) {
 
-            pop(&path);
-            int count = 0;
+        // First step : find the corresponding node ; count passed son.
+        for (passSons = 0; passSons < nodePtr->nbSons; passSons++) {
+            if (nodePtr->sons[passSons] == top(path)) {
+                nodePtr = pop(&path);
+                break;
+            }
         }
-        else
-            count++;
+
+        // Second Step : Find out which mouvement was used
+        // This is the first 0 after passSons zeros
+        for (int i = 0; i < path.nbElts; i++) {
+            if (structMvtArr[i] == 1) {
+                continue;
+            } else {
+                if (passSons > 0) {
+                    passSons--;
+                } else {
+                    mvtArr[idxMvtArr] = tree->moveArr[i];
+                    structMvtArr[i] = 1;
+                    break;
+                }
+
+            }
+        }
+
+        idxMvtArr++;
+
     }
 
+    for (int i = 0; i < idxMvtArr; i++)
+        printf("Move %d: %s\n", i + 1, getMoveAsString(mvtArr[i]));
+
+    free(mvtArr);
+    free(structMvtArr);
 }
 
 
@@ -79,7 +114,8 @@ int main() {
         }
         printf("\n");
     }
-    displayMap(map);
+    //displayMap(map);
+
 
 
     // Test units

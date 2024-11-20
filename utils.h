@@ -58,9 +58,9 @@ t_localisation ergMove(t_localisation, t_move);
 void printTree(t_tree *tree);
 
 
-bool verifyCrevasses(int, int, t_map);
+bool verifyCrevasses(int x, int y, t_map map);
 
-t_localisation giveStartLocation(int x, int y, t_orientation ori, t_map);
+t_localisation giveStartLocation(t_map map);
 
 
 #endif //MARC_PRJ_UTILS_H
