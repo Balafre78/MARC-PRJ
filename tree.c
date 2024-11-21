@@ -69,7 +69,7 @@ t_tree *buildTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_locali
 
     tree->lenArr = lenArr;
     tree->moveArr = moveArr;
-    tree->maxDepth = maxDepth;
+    tree->maxDepth = maxDepth-1;
 
     // int *usedMoveArr is an array to store if the move have been used 0 if unused 1 else
     bool *usedMoveArr = calloc(lenArr, sizeof(bool));

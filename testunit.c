@@ -24,6 +24,38 @@ void displayMapInfos(t_map map) {
     displayMap(map);
 }
 
+void unitTest()
+{
+    t_map map;
+    // The following preprocessor directive checks if the code is being compiled on a Windows system.
+    // If either _WIN32 or _WIN64 is defined, it means we are on a Windows platform.
+    // On Windows, file paths use backslashes (\), hence we use the appropriate file path for Windows.
+    #if defined(_WIN32) || defined(_WIN64)
+        map = createMapFromFile("..\\maps\\example1.map");
+    #else
+        map = createMapFromFile("../maps/example1.map");
+    #endif
+
+    // Fake tree test
+    nodeTest(true);
+
+
+    // Base information for the map
+    displayMapInfos(map);
+    // Map tree building test
+    treeAutoConstructionTest(map, false);
+
+    // Same as above but use predefined paramters
+    int lenMvtArr = 4;
+    t_move *mvtArr = malloc(lenMvtArr*sizeof(t_move));
+    mvtArr[0] = F_10;
+    mvtArr[1] = T_RIGHT;
+    mvtArr[2] = T_LEFT;
+    mvtArr[3] = F_10;
+    t_localisation loc = {3,3, NORTH};
+    treeAutoConstructionPreDefinedMvtSetTest(map, true, lenMvtArr, mvtArr, loc);
+}
+
 void nodeTest(bool displayTree) {
     printf("\nFAKE TREE TEST\n");
     t_node *root = createNode(COST_UNDEF, -1, 3, NULL);
@@ -105,84 +137,4 @@ void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int l
     displayStack(path);
     deleteTree(bulk);
     bulk = NULL;
-}
-
-void mainProc(int maxDepth, int lenMove, bool displayTree, bool displayAvailMoves, bool displayTrace,
-              bool displayInterSteps) {
-    t_map map;
-#if defined(_WIN32) || defined(_WIN64)
-    map = createMapFromFile("..\\maps\\example1.map");
-#else
-    map = createMapFromFile("../maps/example1.map");
-#endif
-    //displayMap(map);
-
-    t_localisation initPosition;
-    t_position basePosition = getBaseStationPosition(map);
-    printf("Objective is @(x:%d, y:%d)\n", basePosition.x, basePosition.y);
-    initPosition = giveStartLocation(map);
-
-    t_tree *tree;
-
-    int steps = 0;
-    while (initPosition.pos.x != basePosition.x || initPosition.pos.y != basePosition.y) {
-        tree = buildTree(map, maxDepth, lenMove, selMoves(lenMove), initPosition);
-
-        if (displayAvailMoves) {
-            printf("Available moves :\n");
-            for (int i = 0; i < tree->lenArr; i++)
-                printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[i]));
-        }
-
-        if (displayTree)
-            printTree(tree);
-
-        // Finding path
-        t_node *minimal_node = minimalNode(*tree);
-        t_stack path = findNodePath(minimal_node, *tree);
-        //displayStack(path);
-
-        int pathLen = path.nbElts;
-        t_move *mvtArr = malloc(pathLen * sizeof(t_move));
-        int *structMvtArr = calloc(lenMove, sizeof(t_move));
-
-        int passSons;
-        int idxMvtArr = 0;
-        t_node *nodePtr = tree->root;
-        while (path.nbElts > 0) {
-            // First step : find the corresponding node ; count passed son.
-            // Second Step : Find out which movement was used (minus passed son)
-            passSons = 0;
-            for (int i = 0; i < lenMove; i++) {
-                if (structMvtArr[i] == 1) {
-                    passSons++;
-                    continue;
-                }
-                if (nodePtr->sons[i - passSons] == top(path)) {
-                    mvtArr[idxMvtArr] = i;
-                    structMvtArr[i] = 1;
-                    nodePtr = pop(&path);
-                    break;
-                }
-            }
-
-            idxMvtArr++;
-        }
-        for (int i = 0; i < pathLen; i++) {
-            //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
-            if (displayTrace)
-                printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
-            initPosition = move(initPosition, tree->moveArr[mvtArr[i]]);
-            //printf("Arrived @(x:%d,y:%d) Orri:%d\n", initPosition.pos.x, initPosition.pos.y, initPosition.ori);
-        }
-        if (displayInterSteps)
-            printf("Arrived @(x:%d,y:%d)\n", initPosition.pos.x, initPosition.pos.y);
-
-        free(structMvtArr);
-        deleteTree(tree);
-        free(mvtArr);
-
-        steps++;
-    }
-    printf("Arrived at the base station in %d steps !\n", steps);
 }
