@@ -42,6 +42,11 @@ typedef struct s_map
     t_slopeOrientation **slopes;
 } t_map;
 
+/**
+ * @brief :  function to get the position of the base station
+ * @param map : the map
+ * @return : the position of the base station
+ */
 t_position getBaseStationPosition(t_map map);
 
 /**

@@ -14,13 +14,6 @@
 /* local functions are used only in this file, as helper functions */
 
 /**
- * @brief :  function to get the position of the base station
- * @param map : the map
- * @return : the position of the base station
- */
-t_position getBaseStationPosition(t_map);
-
-/**
  * @brief : function to calculate costs of the map  from the base station
  * @param map : the map
  * @return none
