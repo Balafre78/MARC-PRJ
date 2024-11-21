@@ -147,6 +147,7 @@ t_node *buildTreeRec(t_node *parent, t_map map, t_tree *tree, bool *usedMoveArr,
     }
 
     ptr = createNode(localCost, parent->depth + 1, nodeNbSons, parent);
+    ptr->microMove = tree->moveArr[idxUMA];
 
     if (nodeNbSons > 0) {
         int d = 0; // the shift

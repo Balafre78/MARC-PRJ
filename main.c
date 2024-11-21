@@ -34,45 +34,37 @@ void run() {
     t_stack path = findNodePath(minimal_node, *tree);
     displayStack(path);
 
-    t_move *mvtArr = malloc(path.nbElts * sizeof(t_move));
-    int *structMvtArr = calloc(path.nbElts, sizeof(t_move));
+    int pathLen = path.nbElts;
+    t_move *mvtArr = malloc(pathLen * sizeof(t_move));
+    int *structMvtArr = calloc(LEN_MOVE, sizeof(t_move));
 
     int passSons;
     int idxMvtArr = 0;
     t_node *nodePtr = tree->root;
     while (path.nbElts > 0) {
-
         // First step : find the corresponding node ; count passed son.
-        for (passSons = 0; passSons < nodePtr->nbSons; passSons++) {
-            if (nodePtr->sons[passSons] == top(path)) {
+        // Second Step : Find out which movement was used (minus passed son)
+        passSons = 0;
+        for (int i = 0; i < LEN_MOVE; i++) {
+            if (structMvtArr[i] == 1) {
+                passSons++;
+                continue;
+            }
+            if (nodePtr->sons[i - passSons] == top(path)) {
+                mvtArr[idxMvtArr] = i;
+                structMvtArr[i] = 1;
                 nodePtr = pop(&path);
                 break;
             }
         }
 
-        // Second Step : Find out which mouvement was used
-        // This is the first 0 after passSons zeros
-        for (int i = 0; i < path.nbElts; i++) {
-            if (structMvtArr[i] == 1) {
-                continue;
-            } else {
-                if (passSons > 0) {
-                    passSons--;
-                } else {
-                    mvtArr[idxMvtArr] = tree->moveArr[i];
-                    structMvtArr[i] = 1;
-                    break;
-                }
-
-            }
-        }
-
         idxMvtArr++;
-
     }
 
-    for (int i = 0; i < idxMvtArr; i++)
-        printf("Move %d: %s\n", i + 1, getMoveAsString(mvtArr[i]));
+    for (int i = 0; i < pathLen; i++) {
+        //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
+        printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
+    }
 
     free(mvtArr);
     free(structMvtArr);
@@ -80,7 +72,6 @@ void run() {
 
 
 int main() {
-
     // Define the seed either with predefined SEED macro or with some randomness from time
 #ifdef SEED
     srand(SEED);
@@ -115,7 +106,6 @@ int main() {
         printf("\n");
     }
     //displayMap(map);
-
 
 
     // Test units
