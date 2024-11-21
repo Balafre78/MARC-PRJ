@@ -4,7 +4,6 @@
 
 #ifndef MARC_PRJ_NODE_H
 #define MARC_PRJ_NODE_H
-#include "moves.h"
 
 typedef struct s_node {
     int value;             // Final point reached in value

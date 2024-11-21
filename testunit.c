@@ -4,6 +4,7 @@
 
 #include "testunit.h"
 #include "utils.h"
+#include "tree.h"
 
 void displayMapInfos(t_map map) {
     printf("Map created with dimensions (y:%d) x (x:%d)\n", map.y_max, map.x_max);

@@ -4,6 +4,9 @@
 
 #include "tree.h"
 
+#include "utils.h"
+
+
 /**
  * @brief Build recursively the tree
  * @param parent The node parent

@@ -153,7 +153,7 @@ t_localisation giveStartLocation(t_map map) {
     loc.ori = NORTH;
 
     if (verifyCrevasses(loc.pos.x, loc.pos.y, map)) {
-        fprintf(stderr,  "Start location is in an impossible place");
+        fprintf(stderr, "Start location is in an impossible place");
         exit(1);
     }
 

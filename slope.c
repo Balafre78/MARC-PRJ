@@ -7,10 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include "map.h"
 #include "loc.h"
-#include "queue.h"
 
 
 void createSlopeArrFromFile(t_map map, char *filename) {

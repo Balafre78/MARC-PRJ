@@ -8,12 +8,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "moves.h"
 #include "map.h"
-#include "queue.h"
 #include "stack.h"
-#include "utils.h"
 #include "node.h"
+#include "moves.h"
 
 
 typedef struct s_tree {
