@@ -182,8 +182,8 @@ void deleteTree(t_tree *tree) {
 t_node *minimalNodeRec(t_node *node, t_node *currentMin) {
     if (node == NULL) return currentMin;
 
-    // If no currentMin node defined or finding a new minimal node
-    if (currentMin == NULL || node->value < currentMin->value) {
+    // If no currentMin node defined, finding a new minimal node, or new minimal node with low depth
+    if (currentMin == NULL || node->value < currentMin->value || (node->value == currentMin->value && node->depth < currentMin->depth)) {
         currentMin = node;
     }
 
