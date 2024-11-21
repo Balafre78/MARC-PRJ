@@ -5,9 +5,9 @@
 #ifndef MARC_PRJ_TESTUNIT_H
 #define MARC_PRJ_TESTUNIT_H
 
+#include <stdbool.h>
 #include "map.h"
 #include "tree.h"
-#include "utils.h"
 
 
 /**
@@ -31,6 +31,12 @@ void treeAutoConstructionTest(t_map map, bool displayTree);
  * @param mvtArr The available move to execute
  * @param locInit The initial localisation
  */
-void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int lenMvtArr, t_move *mvtArr, t_localisation locInit);
+void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int lenMvtArr, t_move *mvtArr,
+                                              t_localisation locInit);
+
+void mainProc(int maxDepth, int lenMove, bool displayTree, bool displayAvailMoves, bool displayTrace,
+              bool displayInterSteps);
+
+void displayMapInfos(t_map map);
 
 #endif //MARC_PRJ_TESTUNIT_H
