@@ -10,6 +10,7 @@
 #define COST_DIE 10000
 
 #include "slope.h"
+#include "loc.h"
 
 /**
  * @brief Enum for the possible soils of the map
@@ -40,6 +41,8 @@ typedef struct s_map
     int     y_max;
     t_slopeOrientation **slopes;
 } t_map;
+
+t_position getBaseStationPosition(t_map map);
 
 /**
  * @brief Function to initialise the map from a file

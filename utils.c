@@ -148,8 +148,8 @@ bool verifyCrevasses(int x, int y, t_map map) {
 
 t_localisation giveStartLocation(t_map map) {
     t_localisation loc;
-    loc.pos.x = 3;
-    loc.pos.y = 3;
+    loc.pos.x = 5;
+    loc.pos.y = 6;
     loc.ori = NORTH;
 
     if (verifyCrevasses(loc.pos.x, loc.pos.y, map)) {

@@ -2,6 +2,7 @@
 #include "map.h"
 #include "utils.h"
 #include "testunit.h"
+#include "map.h"
 
 #define MAX_DEPTH 5
 #define LEN_MOVE 9
@@ -17,57 +18,66 @@ void run() {
     //displayMap(map);
 
     t_localisation initPosition;
+    t_position basePosition = getBaseStationPosition(map);
+    printf("basePosition: %d %d\n", basePosition.x, basePosition.y);
     initPosition = giveStartLocation(map);
 
-    t_move *moves = selMoves(9);
     t_tree *tree;
-    tree = buildTree(map, MAX_DEPTH, LEN_MOVE, moves, initPosition);
 
-    printf("Available moves :\n");
-    for (int i = 0; i < tree->lenArr; i++)
-        printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[i]));
+    while (initPosition.pos.x != basePosition.x || initPosition.pos.y != basePosition.y) {
+        tree = buildTree(map, MAX_DEPTH, LEN_MOVE, selMoves(9), initPosition);
 
-    //printTree(tree);
+        /*
+        printf("Available moves :\n");
+        for (int i = 0; i < tree->lenArr; i++)
+            printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[i]));
+        */
+        //printTree(tree);
 
-    // Finding path
-    t_node *minimal_node = minimalNode(*tree);
-    t_stack path = findNodePath(minimal_node, *tree);
-    displayStack(path);
+        // Finding path
+        t_node *minimal_node = minimalNode(*tree);
+        t_stack path = findNodePath(minimal_node, *tree);
+        //displayStack(path);
 
-    int pathLen = path.nbElts;
-    t_move *mvtArr = malloc(pathLen * sizeof(t_move));
-    int *structMvtArr = calloc(LEN_MOVE, sizeof(t_move));
+        int pathLen = path.nbElts;
+        t_move *mvtArr = malloc(pathLen * sizeof(t_move));
+        int *structMvtArr = calloc(LEN_MOVE, sizeof(t_move));
 
-    int passSons;
-    int idxMvtArr = 0;
-    t_node *nodePtr = tree->root;
-    while (path.nbElts > 0) {
-        // First step : find the corresponding node ; count passed son.
-        // Second Step : Find out which movement was used (minus passed son)
-        passSons = 0;
-        for (int i = 0; i < LEN_MOVE; i++) {
-            if (structMvtArr[i] == 1) {
-                passSons++;
-                continue;
+        int passSons;
+        int idxMvtArr = 0;
+        t_node *nodePtr = tree->root;
+        while (path.nbElts > 0) {
+            // First step : find the corresponding node ; count passed son.
+            // Second Step : Find out which movement was used (minus passed son)
+            passSons = 0;
+            for (int i = 0; i < LEN_MOVE; i++) {
+                if (structMvtArr[i] == 1) {
+                    passSons++;
+                    continue;
+                }
+                if (nodePtr->sons[i - passSons] == top(path)) {
+                    mvtArr[idxMvtArr] = i;
+                    structMvtArr[i] = 1;
+                    nodePtr = pop(&path);
+                    break;
+                }
             }
-            if (nodePtr->sons[i - passSons] == top(path)) {
-                mvtArr[idxMvtArr] = i;
-                structMvtArr[i] = 1;
-                nodePtr = pop(&path);
-                break;
-            }
+
+            idxMvtArr++;
         }
+        for (int i = 0; i < pathLen; i++) {
+            //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
+            printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
+            initPosition = move(initPosition, tree->moveArr[mvtArr[i]]);
+            //printf("Arrived @(x:%d,y:%d) Orri:%d\n", initPosition.pos.x, initPosition.pos.y, initPosition.ori);
+        }
+        printf("Arrived @(x:%d,y:%d)\n", initPosition.pos.x, initPosition.pos.y);
 
-        idxMvtArr++;
-    }
+        free(structMvtArr);
+        deleteTree(tree);
+        free(mvtArr);
 
-    for (int i = 0; i < pathLen; i++) {
-        //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
-        printf("Move %d: %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
-    }
-
-    free(mvtArr);
-    free(structMvtArr);
+        }
 }
 
 

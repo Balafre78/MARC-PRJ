@@ -12,7 +12,6 @@ typedef struct s_node {
     int nbSons;            // Amount of sons
     struct s_node **sons;  // Link to sons ALWAYS SORTED IN RIGHT ORDER
     struct s_node *parent; // Parent node - NULL for root
-    t_move microMove;
 } t_node;
 
 /**
