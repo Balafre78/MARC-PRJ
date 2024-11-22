@@ -126,7 +126,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
 
             idxMvtArr++;
         }
-        if(displaySelectedMoves) printf("\t- Selected moves:\n");
+        if(displaySelectedMoves) printf("\t- Selected moves (max %d):\n", tree->maxDepth+1);
         for (int i = 0; i < pathLen; i++) {
             //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
             if (displaySelectedMoves)
