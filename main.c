@@ -132,9 +132,9 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
             if (displaySelectedMoves)
                 printf("\t\t%d. %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
             roverPosition = move(roverPosition, tree->moveArr[mvtArr[i]]);
+            finishOnReg = map.soils[roverPosition.pos.x][roverPosition.pos.y] == REG || finishOnReg;
             //printf("Arrived @(x:%d,y:%d) Orri:%d\n", roverPosition.pos.x, roverPosition.pos.y, roverPosition.ori);
         }
-        finishOnReg = map.soils[roverPosition.pos.x][roverPosition.pos.y] == REG;
 
         // RESULTS
         if (displayPhaseResult)
