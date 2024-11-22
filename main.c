@@ -65,13 +65,18 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
     while (roverPosition.pos.x != basePosition.x || roverPosition.pos.y != basePosition.y) {
         // START OF PHASE
         phase++;
-        printf("-> PHASE %d\n", phase);
+        if(finishOnReg) {
+            printf("-> PHASE %d (Damaged)\n", phase);
+        } else {
+            printf("-> PHASE %d\n", phase);
+        }
         enum e_move* mvt = selMoves(lenMove);
 
         // TREE BUILDING
         startTimer(&buildTreeTimer);
         if(finishOnReg) {
             tree = buildTree(map, maxDepth-1, lenMove, mvt, roverPosition);
+            finishOnReg = false;
         } else {
             tree = buildTree(map, maxDepth, lenMove, mvt, roverPosition);
         }
@@ -129,10 +134,10 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
         if(displaySelectedMoves) printf("\t- Selected moves (max %d):\n", tree->maxDepth+1);
         for (int i = 0; i < pathLen; i++) {
             //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
-            if (displaySelectedMoves)
-                printf("\t\t%d. %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
             roverPosition = move(roverPosition, tree->moveArr[mvtArr[i]]);
             finishOnReg = map.soils[roverPosition.pos.x][roverPosition.pos.y] == REG || finishOnReg;
+            if (displaySelectedMoves)
+                printf("\t\t%d. %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
             //printf("Arrived @(x:%d,y:%d) Orri:%d\n", roverPosition.pos.x, roverPosition.pos.y, roverPosition.ori);
         }
 

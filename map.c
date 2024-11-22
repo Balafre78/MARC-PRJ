@@ -244,7 +244,6 @@ t_map createMapFromFile(char *filename)
     createSlopeArrFromFile(map, filename);
     printf("Successfully calculate Slopes\n");
 #endif
-    printf("End build of map\n");
     return map;
 }
 
