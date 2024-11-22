@@ -37,7 +37,6 @@ int main()
     // unitTest();
     // Main process of finding the base
     runRover(MAX_DEPTH, LEN_MOVE, false, true, true, true, true);
-
     return 0;
 }
 
@@ -54,14 +53,16 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
     t_timer runTimer, buildTreeTimer, minimalNodeTimer, findNodePathTimer = createTimer();
     startTimer(&runTimer);
 
-    t_localisation initPosition = map.startLocalisation;;
+    t_localisation roverPosition = map.startLocalisation;;
     t_position basePosition = getBaseStationPosition(map);
     printf("-> Base at position (x:%d, y:%d)\n", basePosition.x, basePosition.y);
+    printf("-> Starting at (x:%d, y:%d)\n", roverPosition.pos.x, roverPosition.pos.y);
 
     t_tree *tree;
+    bool finishOnReg = false;
 
     int phase = 0;
-    while (initPosition.pos.x != basePosition.x || initPosition.pos.y != basePosition.y) {
+    while (roverPosition.pos.x != basePosition.x || roverPosition.pos.y != basePosition.y) {
         // START OF PHASE
         phase++;
         printf("-> PHASE %d\n", phase);
@@ -69,7 +70,11 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
 
         // TREE BUILDING
         startTimer(&buildTreeTimer);
-        tree = buildTree(map, maxDepth, lenMove, mvt, initPosition);
+        if(finishOnReg) {
+            tree = buildTree(map, maxDepth-1, lenMove, mvt, roverPosition);
+        } else {
+            tree = buildTree(map, maxDepth, lenMove, mvt, roverPosition);
+        }
         stopTimer(&buildTreeTimer);
 
         // AVAILABLE MOVES
@@ -78,7 +83,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
             int i;
             for (i = 0; i < tree->lenArr-1; i++)
                 printf("%s, ", getMoveAsString(tree->moveArr[i]));
-            printf("%s]\n", getMoveAsString(tree->moveArr[i]));
+            printf("%s] (%d)\n", getMoveAsString(tree->moveArr[i]), lenMove);
         }
 
         if (displayTree)
@@ -126,13 +131,14 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
             //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
             if (displaySelectedMoves)
                 printf("\t\t%d. %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
-            initPosition = move(initPosition, tree->moveArr[mvtArr[i]]);
-            //printf("Arrived @(x:%d,y:%d) Orri:%d\n", initPosition.pos.x, initPosition.pos.y, initPosition.ori);
+            roverPosition = move(roverPosition, tree->moveArr[mvtArr[i]]);
+            //printf("Arrived @(x:%d,y:%d) Orri:%d\n", roverPosition.pos.x, roverPosition.pos.y, roverPosition.ori);
         }
+        finishOnReg = map.soils[roverPosition.pos.x][roverPosition.pos.y] == REG;
 
         // RESULTS
         if (displayPhaseResult)
-            printf("\t- At position (x:%d,y:%d)\n", initPosition.pos.x, initPosition.pos.y);
+            printf("\t- At position (x:%d,y:%d)\n", roverPosition.pos.x, roverPosition.pos.y);
 
         free(structMvtArr);
         deleteTree(tree);

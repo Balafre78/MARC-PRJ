@@ -50,14 +50,4 @@ t_localisation ergMove(t_localisation, t_move);
  */
 void printTree(t_tree *tree);
 
-/**
- * Verify if the soil is effectively a CREVASSE
- * @param x x position
- * @param y y position
- * @param map the map containing the soil to study
- * @return true if it is false else
- */
-bool verifyCrevasses(int x, int y, t_map map);
-
-
 #endif //MARC_PRJ_UTILS_H
