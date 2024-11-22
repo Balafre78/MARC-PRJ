@@ -16,7 +16,7 @@ typedef struct s_tree t_tree;
 
 // Define with macro how to describe the base distribution of moves.
 #define NB_MVT_TYPE 7
-#define ARR_MVT_POOL { 22, 15, 7, 7, 21, 21, 7}
+#define ARR_MVT_POOL {22, 15, 7, 7, 21, 21, 7}
 #define BASE_MVT_SUM 100
 
 // Debug flag macro - help for debugging stuff
@@ -58,14 +58,6 @@ void printTree(t_tree *tree);
  * @return true if it is false else
  */
 bool verifyCrevasses(int x, int y, t_map map);
-
-/**
- * Return the start location, base function to defined this parameter
- * @warning should return a predictable result
- * @param map the map to place the robot on
- * @return the location of the robot
- */
-t_localisation giveStartLocation(t_map map);
 
 
 #endif //MARC_PRJ_UTILS_H

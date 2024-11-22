@@ -190,8 +190,8 @@ void calculateCosts(t_map map)
 t_map createMapFromFile(char *filename)
 {
     /* rules for the file :
-     * - the first line contains the number of lines : y dimension (int)
-     * - the second line contains the number of columns : x dimension (int)
+     * - the first line contains the map size : y dimension - x dimension
+     * - the second line contains the starting t_localisation of the rover (x, y, ori)
      * - the next lines contain the map values (int) separated by spaces : one line = one row
      * - the values are the following : 0 = BASE_STATION, 1 = PLAIN, 2 = ERG, 3 = REG, 4 = CREVASSE
      */
@@ -206,8 +206,9 @@ t_map createMapFromFile(char *filename)
         fprintf(stderr, "Error: cannot open file %s\n", filename);
         exit(1);
     }
-    fscanf(file, "%d", &ydim);
-    fscanf(file, "%d", &xdim);
+    fscanf(file, "%d %d", &ydim, &xdim);
+    fscanf(file, "%d %d %d", &map.startLocalisation.pos.x, &map.startLocalisation.pos.y, &map.startLocalisation.ori);
+    //fscanf(file, "%d", );
     map.x_max = xdim;
     map.y_max = ydim;
     map.soils = (t_soil **)malloc(ydim * sizeof(t_soil *));
@@ -243,6 +244,7 @@ t_map createMapFromFile(char *filename)
     createSlopeArrFromFile(map, filename);
     printf("Successfully calculate Slopes\n");
 #endif
+    printf("End build of map\n");
     return map;
 }
 

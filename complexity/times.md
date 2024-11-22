@@ -1,6 +1,6 @@
 # Temps d'éxécutions du programme
 
-- **Carte :** exemple1.map
+- **Carte :** example1.map (7x6)
 
 | Mouvements | Construction<br/>(buildTree) | Feuille minimale<br/>(minimalNode) | Chemin<br/>(findNodePath) | Guidage<br/>Complet |
 |:----------:|:----------------------------:|:----------------------------------:|:-------------------------:|:-------------------:|
@@ -9,7 +9,7 @@
 | 7 parmi 13 |        42 ms - 332 ms        |            0ms - 63 ms             |            0ms            |       1.666s        |
 | 9 parmi 15 |           54.193s            |                39ms                |            0ms            |       55.213s       |
 
-- **Carte :** training.map
+- **Carte :** corridor.map (11x11)
 
 | Mouvements | Construction<br/>(buildTree) | Feuille minimale<br/>(minimalNode) | Chemin<br/>(findNodePath) | Guidage<br/>Complet |
 |:----------:|:----------------------------:|:----------------------------------:|:-------------------------:|:-------------------:|

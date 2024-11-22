@@ -2,10 +2,10 @@
 #include "map.h"
 #include "utils.h"
 #include "testunit.h"
-#include "Complexity/timer.h"
+#include "complexity/timer.h"
 
 // Uncomment SEED macro to use fixed seed for random generation
-//#define SEED 1732121615
+#define SEED 1732121615
 
 #define MAX_DEPTH 5
 #define LEN_MOVE 9
@@ -54,10 +54,9 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
     t_timer runTimer, buildTreeTimer, minimalNodeTimer, findNodePathTimer = createTimer();
     startTimer(&runTimer);
 
-    t_localisation initPosition;
+    t_localisation initPosition = map.startLocalisation;;
     t_position basePosition = getBaseStationPosition(map);
     printf("-> Base at position (x:%d, y:%d)\n", basePosition.x, basePosition.y);
-    initPosition = giveStartLocation(map);
 
     t_tree *tree;
 

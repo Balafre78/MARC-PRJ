@@ -39,6 +39,7 @@ typedef struct s_map
     int     **costs;
     int     x_max;
     int     y_max;
+    t_localisation startLocalisation;
     t_slopeOrientation **slopes;
 } t_map;
 

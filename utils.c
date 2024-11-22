@@ -144,18 +144,3 @@ t_localisation ergMove(t_localisation loc, t_move mvt) {
 bool verifyCrevasses(int x, int y, t_map map) {
     return (map.soils[x][y] == CREVASSE);
 }
-
-
-t_localisation giveStartLocation(t_map map) {
-    t_localisation loc;
-    loc.pos.x = 5;
-    loc.pos.y = 6;
-    loc.ori = NORTH;
-
-    if (verifyCrevasses(loc.pos.x, loc.pos.y, map)) {
-        fprintf(stderr, "Start location is in an impossible place");
-        exit(1);
-    }
-
-    return loc;
-}
