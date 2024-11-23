@@ -5,11 +5,12 @@
 #ifndef UNTITLED1_MAP_H
 #define UNTITLED1_MAP_H
 
-#define SLOPE_OPT
+//#define SLOPE_OPT
 #define COST_UNDEF 65535
 #define COST_DIE 10000
 
 #include "slope.h"
+#include "loc.h"
 
 /**
  * @brief Enum for the possible soils of the map
@@ -38,10 +39,16 @@ typedef struct s_map
     int     **costs;
     int     x_max;
     int     y_max;
-#ifdef SLOPE_OPT
+    t_localisation startLocalisation;
     t_slopeOrientation **slopes;
-#endif
 } t_map;
+
+/**
+ * @brief :  function to get the position of the base station
+ * @param map : the map
+ * @return : the position of the base station
+ */
+t_position getBaseStationPosition(t_map map);
 
 /**
  * @brief Function to initialise the map from a file

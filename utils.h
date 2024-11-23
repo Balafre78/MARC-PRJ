@@ -14,16 +14,9 @@
 
 typedef struct s_tree t_tree;
 
-// Define the seed either with predefined SEED macro or with some randomness
-// Decomment SEED macro to use fix seed for random generation
-//#define SEED 1730810125
-#ifndef SEED
-#include <time.h>
-#endif
-
 // Define with macro how to describe the base distribution of moves.
 #define NB_MVT_TYPE 7
-#define ARR_MVT_POOL { 22, 15, 7, 7, 21, 21, 7}
+#define ARR_MVT_POOL {22, 15, 7, 7, 21, 21, 7}
 #define BASE_MVT_SUM 100
 
 // Debug flag macro - help for debugging stuff

@@ -7,10 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
 #include "map.h"
 #include "loc.h"
-#include "queue.h"
 
 
 void createSlopeArrFromFile(t_map map, char *filename) {
@@ -22,7 +20,6 @@ void createSlopeArrFromFile(t_map map, char *filename) {
      */
 
     int xdim, ydim;     // dimensions of the map
-    char buff[100];
 
 
     // filename + .slope (+6)
@@ -33,7 +30,6 @@ void createSlopeArrFromFile(t_map map, char *filename) {
     }
     strcpy(fullFilename, filename);
     strcat(fullFilename, ".slope");
-    printf("%s\n", fullFilename);
 
     FILE *file = fopen(fullFilename, "r");
     if (file == NULL) {
@@ -63,7 +59,6 @@ void createSlopeArrFromFile(t_map map, char *filename) {
             fscanf(file, "%d", &value);
 
             map.slopes[i][j] = value;
-            printf("%d@(%d,%d)\n", value, j, i);
             switch (value) {
                 case S_RIGHT:
                     if (isValidLocalisation((t_position) {j + 1, i}, map.x_max, map.y_max))
