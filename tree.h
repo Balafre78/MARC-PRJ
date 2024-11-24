@@ -21,19 +21,6 @@ typedef struct s_tree {
     int maxDepth;       // Max depth of the tree
 } t_tree;
 
-
-/*
-
-    ________                      ___
-   / ____/ /_____ _____  ___     <  /
-  / __/ / __/ __ `/ __ \/ _ \    / /
- / /___/ /_/ /_/ / /_/ /  __/   / /
-/_____/\__/\__,_/ .___/\___/   /_/
-               /_/
- * Etape 1
-
-*/
-
 /**
  * @brief Build the combinatory tree
  * @param map Map to analyse
@@ -60,34 +47,10 @@ t_node *minimalNode(t_tree tree);
 
 /**
  * @brief Find a node in a tree
- * This function will use POSTFIX SEARCH (find leaves first) ??? not sure
  * @param node the Node
  * @param tree the Tree
  * @return a stack from root to the given node (on top)
  */
 t_stack findNodePath(t_node *node, t_tree tree);
-
-
-/*
-   ____  ____  ______    _____   __
-  / __ \/ __ \/_  __/   /  _/ | / /
- / / / / /_/ / / /_____ / //  |/ /
-/ /_/ / ____/ / /_____// // /|  /
-\____/_/     /_/     /___/_/ |_/
-
- * OPT-IN
-
-*/
-
-/**
- * @brief Build the combinatory tree
- * @param map Map to analyse
- * @param maxDepth Amount of mvts to use
- * @param lenArr Length of the moveArr
- * @param moveArr Array of mvts available
- * @param iniLoc Initial location of the robot
- * @return Pointer to the Tree
- */
-t_tree *buildSlopeTree(t_map map, int maxDepth, int lenArr, t_move *moveArr, t_localisation iniLoc);
 
 #endif //MARC_PRJ_TREE_H

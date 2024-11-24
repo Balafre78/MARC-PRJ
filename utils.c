@@ -87,7 +87,6 @@ t_move *selMoves(int size) {
         // Try to find which move have been chosen and retire form the good stack.
         acc = 0;
         for (int idxMvt = 0; idxMvt < NB_MVT_TYPE; idxMvt++) {
-            //printf("selMvt:%d | acc:%2d | choice:%2d | acc + movePool[idxMvt]:%2d\n", idxMvt, acc, choice, acc + movePool[idxMvt]);
             if (acc <= choice && choice < acc + movePool[idxMvt]) {
                 movePool[idxMvt]--;
                 moveArr[i] = (t_move) idxMvt;

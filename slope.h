@@ -5,6 +5,10 @@
 #ifndef MARC_PRJ_SLOPE_H
 #define MARC_PRJ_SLOPE_H
 
+
+// This option is by default set on
+// This option integrate the slopes into the process
+// To use this option check if you have a correct .slope file with your .map file
 #define SLOPE_OPT
 
 typedef struct s_map t_map;

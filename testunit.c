@@ -42,6 +42,7 @@ void unitTest()
 
     // Base information for the map
     displayMapInfos(map);
+
     // Map tree building test
     treeAutoConstructionTest(map, false);
 
@@ -101,9 +102,8 @@ void treeAutoConstructionTest(t_map map, bool displayTree) {
     printf("\nMAP TREE BUILDING TEST\n");
     t_move *availMoves = selMoves(9);
     t_localisation initLoc = loc_init(4, 5, NORTH);
-    //t_localisation initLoc = loc_init(0,1, EAST);
 
-    // Let's build a 4 depth tree with 9 movements available
+    // Let's build a 5 depth tree with 9 movements available
     printf("Building...\n");
     t_tree *bulk = buildTree(map, 5, 9, availMoves, initLoc);
     printf("End building!\n");
@@ -123,7 +123,7 @@ void treeAutoConstructionPreDefinedMvtSetTest(t_map map, bool displayTree, int l
                                               t_localisation locInit) {
     printf("\nMAP TREE BUILDING TEST\n");
 
-    // Let's build a 4 depth tree with lenMvtArr movements available
+    // Let's build a 5 depth tree with lenMvtArr movements available
     printf("Building...\n");
     t_tree *bulk = buildTree(map, 5, lenMvtArr, mvtArr, locInit);
     printf("End building!\n");

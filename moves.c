@@ -155,9 +155,14 @@ t_localisation move(t_localisation loc, t_move move, t_map map)
         new_loc = translate(loc, move);
     }
 
+
+    // Use this part only if the Slope option is set
 #ifdef SLOPE_OPT
+    // Check if the location can be found in map.slopes
     if (!isValidLocalisation(new_loc.pos, map.x_max, map.y_max))
         return (t_localisation) {-1, -1, NORTH};
+
+    // Do the shift related to slopes
     if (map.slopes[new_loc.pos.y][new_loc.pos.x] != NO_SLOPE) {
         switch (map.slopes[new_loc.pos.y][new_loc.pos.x]) {
             case S_RIGHT:
@@ -178,8 +183,3 @@ t_localisation move(t_localisation loc, t_move move, t_map map)
 
     return new_loc;
 }
-
-/*void updateLocalisation(t_localisation *p_loc, t_move m)
-{
-    *p_loc = move(*p_loc, m);
-}*/

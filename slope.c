@@ -35,6 +35,8 @@ void createSlopeArrFromFile(t_map *map, char *filename) {
     FILE *file = fopen(fullFilename, "r");
     if (file == NULL) {
         fprintf(stderr, "Error: cannot open file %s\n", filename);
+        fprintf(stderr,
+                "NB: To use SLOPE_OPT you must have a corresponding .slope file in the same directory as your .map");
         exit(1);
     }
 
