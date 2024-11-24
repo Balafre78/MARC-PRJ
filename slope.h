@@ -5,6 +5,8 @@
 #ifndef MARC_PRJ_SLOPE_H
 #define MARC_PRJ_SLOPE_H
 
+#define SLOPE_OPT
+
 typedef struct s_map t_map;
 
 typedef enum e_slopeOrientation {
@@ -21,7 +23,7 @@ typedef enum e_slopeOrientation {
  * @param filename : the name of the file
  * @return the map
  */
-void createSlopeArrFromFile(t_map map, char *filename);
+void createSlopeArrFromFile(t_map *map, char *filename);
 
 
 #endif //MARC_PRJ_SLOPE_H

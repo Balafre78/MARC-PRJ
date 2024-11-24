@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include "moves.h"
+#include "map.h"
 
 /* prototypes of local functions */
 /* local functions are used only in this file, as helper functions */
@@ -142,7 +143,7 @@ char *getMoveAsString(t_move move)
     return _moves[move];
 }
 
-t_localisation move(t_localisation loc, t_move move)
+t_localisation move(t_localisation loc, t_move move, t_map map)
 {
     t_localisation new_loc=loc;
     if ((move >=T_LEFT) && (move <= U_TURN))
@@ -154,11 +155,31 @@ t_localisation move(t_localisation loc, t_move move)
         new_loc = translate(loc, move);
     }
 
+#ifdef SLOPE_OPT
+    if (!isValidLocalisation(new_loc.pos, map.x_max, map.y_max))
+        return (t_localisation) {-1, -1, NORTH};
+    if (map.slopes[new_loc.pos.y][new_loc.pos.x] != NO_SLOPE) {
+        switch (map.slopes[new_loc.pos.y][new_loc.pos.x]) {
+            case S_RIGHT:
+                new_loc.pos.x++;
+                break;
+            case S_UP:
+                new_loc.pos.y--;
+                break;
+            case S_LEFT:
+                new_loc.pos.x--;
+                break;
+            case S_DOWN:
+                new_loc.pos.y++;
+                break;
+        }
+    }
+#endif
+
     return new_loc;
 }
 
-void updateLocalisation(t_localisation *p_loc, t_move m)
+/*void updateLocalisation(t_localisation *p_loc, t_move m)
 {
     *p_loc = move(*p_loc, m);
-    return;
-}
+}*/

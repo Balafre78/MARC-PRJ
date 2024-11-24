@@ -42,7 +42,7 @@ void delMoves(t_move *moveArr);
  * @param move : the move to do
  * @return the new localisation of the robot
  */
-t_localisation ergMove(t_localisation, t_move);
+t_localisation ergMove(t_localisation, t_move, t_map);
 
 /**
  * @brief Print a tree in console (stdout)

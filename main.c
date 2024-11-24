@@ -134,7 +134,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
         if(displaySelectedMoves) printf("\t- Selected moves (max %d):\n", tree->maxDepth+1);
         for (int i = 0; i < pathLen; i++) {
             //printf("Move %d: %i\n", i + 1, mvtArr[i] + 1);
-            roverPosition = move(roverPosition, tree->moveArr[mvtArr[i]]);
+            roverPosition = move(roverPosition, tree->moveArr[mvtArr[i]], map);
             finishOnReg = map.soils[roverPosition.pos.x][roverPosition.pos.y] == REG || finishOnReg;
             if (displaySelectedMoves)
                 printf("\t\t%d. %s\n", i + 1, getMoveAsString(tree->moveArr[mvtArr[i]]));
@@ -145,9 +145,11 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
         if (displayPhaseResult)
             printf("\t- At position (x:%d,y:%d)\n", roverPosition.pos.x, roverPosition.pos.y);
 
+
         free(structMvtArr);
         deleteTree(tree);
         free(mvtArr);
+
 
         // TIMERS
         if(displayTimers) {

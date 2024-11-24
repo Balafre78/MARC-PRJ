@@ -11,7 +11,7 @@
 #include "loc.h"
 
 
-void createSlopeArrFromFile(t_map map, char *filename) {
+void createSlopeArrFromFile(t_map *map, char *filename) {
     /* rules for the file :
      * - the first line contains the number of lines : y dimension (int)
      * - the second line contains the number of columns : x dimension (int)
@@ -20,6 +20,7 @@ void createSlopeArrFromFile(t_map map, char *filename) {
      */
 
     int xdim, ydim;     // dimensions of the map
+    //char buff[100];
 
 
     // filename + .slope (+6)
@@ -39,16 +40,28 @@ void createSlopeArrFromFile(t_map map, char *filename) {
 
     fscanf(file, "%d", &ydim);
     fscanf(file, "%d", &xdim);
-    if (ydim != map.y_max || xdim != map.x_max) {
+    printf("dims: %d %d\n", ydim, xdim);
+    if (ydim != map->y_max || xdim != map->x_max) {
         fprintf(stderr, "Incoherent slope dimension descriptor !\n");
         free(fullFilename);
         exit(1);
     }
 
-    map.slopes = (t_slopeOrientation **) malloc(ydim * sizeof(t_slopeOrientation *));
-    for (int i = 0; i < ydim; i++) {
-        map.slopes[i] = (t_slopeOrientation *) malloc(xdim * sizeof(t_slopeOrientation));
+    map->slopes = (t_slopeOrientation **) malloc(ydim * sizeof(t_slopeOrientation *));
+    int **altcosts = (int **) malloc(ydim * sizeof(int *));
+    if (altcosts == NULL || map->slopes == NULL) {
+        fprintf(stderr, "Cannot allocate mem!");
+        exit(1);
     }
+    for (int i = 0; i < ydim; i++) {
+        map->slopes[i] = (t_slopeOrientation *) malloc(xdim * sizeof(t_slopeOrientation));
+        altcosts[i] = (int *) malloc(xdim * sizeof(int));
+        if (altcosts[i] == NULL || map->slopes[i] == NULL) {
+            fprintf(stderr, "Cannot allocate mem!");
+            exit(1);
+        }
+    }
+
 
     int value;
     for (int i = 0; i < ydim; i++) {
@@ -58,35 +71,70 @@ void createSlopeArrFromFile(t_map map, char *filename) {
 
             fscanf(file, "%d", &value);
 
-            map.slopes[i][j] = value;
+            //printf(" %d", value);
+
+            map->slopes[i][j] = value;
             switch (value) {
                 case S_RIGHT:
-                    if (isValidLocalisation((t_position) {j + 1, i}, map.x_max, map.y_max))
-                        map.costs[i][j] = map.costs[i][j + 1];
+                    if (isValidLocalisation((t_position) {j + 1, i}, map->x_max, map->y_max))
+                        altcosts[i][j] = map->costs[i][j + 1];
                     else
-                        map.costs[i][j] = COST_DIE;
+                        altcosts[i][j] = COST_DIE;
                     break;
                 case S_UP:
-                    if (isValidLocalisation((t_position) {j, i - 1}, map.x_max, map.y_max))
-                        map.costs[i][j] = map.costs[i - 1][j];
+                    if (isValidLocalisation((t_position) {j, i - 1}, map->x_max, map->y_max))
+                        altcosts[i][j] = map->costs[i - 1][j];
                     else
-                        map.costs[i][j] = COST_DIE;
+                        altcosts[i][j] = COST_DIE;
                     break;
                 case S_LEFT:
-                    if (isValidLocalisation((t_position) {j - 1, i}, map.x_max, map.y_max))
-                        map.costs[i][j] = map.costs[i][j - 1];
+                    if (isValidLocalisation((t_position) {j - 1, i}, map->x_max, map->y_max))
+                        altcosts[i][j] = map->costs[i][j - 1];
                     else
-                        map.costs[i][j] = COST_DIE;
+                        altcosts[i][j] = COST_DIE;
                     break;
                 case S_DOWN:
-                    if (isValidLocalisation((t_position) {j, i + 1}, map.x_max, map.y_max))
-                        map.costs[i][j] = map.costs[i + 1][j];
+                    if (isValidLocalisation((t_position) {j, i + 1}, map->x_max, map->y_max))
+                        altcosts[i][j] = map->costs[i + 1][j];
                     else
-                        map.costs[i][j] = COST_DIE;
+                        altcosts[i][j] = COST_DIE;
                     break;
+                case NO_SLOPE:
+                    altcosts[i][j] = map->costs[i][j];
+                    break;
+                default:
+                    fprintf(stderr, "Incorrect slope value !");
+                    exit(1);
             }
 
         }
+
+        //printf("\n");
     }
+
     fclose(file);
+
+    // Transfer altcosts ownership to costs so free previous costs
+    for (int i = 0; i < ydim; i++) {
+        free(map->costs[i]);
+    }
+    free(map->costs);
+    map->costs = altcosts;
+
+    /*for (int i = 0; i < ydim; i++) {
+        for (int j = 0; j < xdim; j++)
+            printf(" %5d", map->costs[i][j]);
+        printf("\n");
+    }
+    for (int i = 0; i < ydim; i++) {
+        for (int j = 0; j < xdim; j++)
+            printf(" %5d", map->slopes[i][j]);
+        printf("\n");
+    }
+    for (int i = 0; i < ydim; i++) {
+        for (int j = 0; j < xdim; j++)
+            printf(" %5d", map->soils[i][j]);
+        printf("\n");
+    }*/
+
 }

@@ -110,7 +110,7 @@ void delMoves(t_move *moveArr) {
     free(moveArr);
 }
 
-t_localisation ergMove(t_localisation loc, t_move mvt) {
+t_localisation ergMove(t_localisation loc, t_move mvt, t_map map) {
     t_move *ptr = &mvt;
     switch (mvt) {
         case F_10:
@@ -134,7 +134,7 @@ t_localisation ergMove(t_localisation loc, t_move mvt) {
     }
 
     if (ptr != NULL)
-        loc = move(loc, *ptr);
+        loc = move(loc, *ptr, map);
 
     return loc;
 
