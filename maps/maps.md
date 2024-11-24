@@ -40,7 +40,7 @@ Slope files are complementary text file to implement slopes in a map.
 
 This file must be named `<yourmap.map>.slope` and be placed in the same directory as `<yourmap.map>`.
 
-- The first line corresponding to the size of the slope map, this must be the same size as the orginal map (it's a
+- The first line corresponding to the size of the slope map, this must be the same size as the original map (it's a
   double
   check).
 
