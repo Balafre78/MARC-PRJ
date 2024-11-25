@@ -34,9 +34,9 @@ int main()
     // Defining the seed
     defineSeed();
     // Unit test
-    // unitTest();
+    //unitTest();
     // Main process of finding the base
-    runRover(MAX_DEPTH, LEN_MOVE, true, true, true, true, true);
+    runRover(MAX_DEPTH, LEN_MOVE, false, true, true, true, true);
     return 0;
 }
 
