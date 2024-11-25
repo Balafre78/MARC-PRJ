@@ -38,11 +38,13 @@ void delMoves(t_move *moveArr);
 /**
  * @brief function to update the localisation of the robot according to a move
  * @warning this function is based on the fact the robot starts to move on erg
- * @param loc : the localisation of the robot
- * @param move : the move to do
+ * @warning this function may return invalid localisation so considered it as UNSECURE
+ * @param loc the localisation of the robot
+ * @param move the move to do
+ * @param map the map to be placed on (only used if SLOPE_OPT is set)
  * @return the new localisation of the robot
  */
-t_localisation ergMove(t_localisation, t_move);
+t_localisation ergMove(t_localisation, t_move, t_map);
 
 /**
  * @brief Print a tree in console (stdout)

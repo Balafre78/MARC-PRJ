@@ -239,9 +239,12 @@ t_map createMapFromFile(char *filename)
     fclose(file);
     calculateCosts(map);
     removeFalseCrevasses(map);
+
+
+    // load the slopes on map if SLOPE_OPT is set
 #ifdef SLOPE_OPT
     printf("Calc Slopes\n");
-    createSlopeArrFromFile(map, filename);
+    createSlopeArrFromFile(&map, filename);
     printf("Successfully calculate Slopes\n");
 #endif
     return map;

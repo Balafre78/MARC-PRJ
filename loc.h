@@ -19,7 +19,7 @@ typedef enum e_orientation
 /**
  * @brief Structure for the position of the robot
  */
-typedef struct e_position
+typedef struct s_position
 {
     int x;
     int y;

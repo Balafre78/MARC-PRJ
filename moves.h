@@ -6,6 +6,7 @@
 #define UNTITLED1_MOVES_H
 
 #include "loc.h"
+#include "map.h"
 
 /**
  * @brief Array of strings for the possible moves of the robot
@@ -36,18 +37,12 @@ char *getMoveAsString(t_move move);
 
 /**
  * @brief function to update the localisation of the robot according to a move
- * @param loc : the localisation of the robot
- * @param move : the move to do
+ * @warning this function may return invalid localisation so considered it as UNSECURE
+ * @param loc the localisation of the robot
+ * @param move the move to do
+ * @param map the map to be placed on (only used if SLOPE_OPT is set)
  * @return the new localisation of the robot
  */
-t_localisation move(t_localisation, t_move);
-
-/**
- * @brief wrapper function to update a single location
- * @param p_loc : the pointer to the localisation of the robot
- * @param move : the move to do
- * @return none
- */
-void updateLocalisation(t_localisation *, t_move);
+t_localisation move(t_localisation, t_move, t_map map);
 
 #endif //UNTITLED1_MOVES_H

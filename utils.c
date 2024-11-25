@@ -87,7 +87,6 @@ t_move *selMoves(int size) {
         // Try to find which move have been chosen and retire form the good stack.
         acc = 0;
         for (int idxMvt = 0; idxMvt < NB_MVT_TYPE; idxMvt++) {
-            //printf("selMvt:%d | acc:%2d | choice:%2d | acc + movePool[idxMvt]:%2d\n", idxMvt, acc, choice, acc + movePool[idxMvt]);
             if (acc <= choice && choice < acc + movePool[idxMvt]) {
                 movePool[idxMvt]--;
                 moveArr[i] = (t_move) idxMvt;
@@ -110,7 +109,7 @@ void delMoves(t_move *moveArr) {
     free(moveArr);
 }
 
-t_localisation ergMove(t_localisation loc, t_move mvt) {
+t_localisation ergMove(t_localisation loc, t_move mvt, t_map map) {
     t_move *ptr = &mvt;
     switch (mvt) {
         case F_10:
@@ -134,7 +133,7 @@ t_localisation ergMove(t_localisation loc, t_move mvt) {
     }
 
     if (ptr != NULL)
-        loc = move(loc, *ptr);
+        loc = move(loc, *ptr, map);
 
     return loc;
 
