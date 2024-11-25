@@ -7,8 +7,8 @@
 // Uncomment SEED macro to use fixed seed for random generation
 #define SEED 1732121615
 
-#define MAX_DEPTH 2
-#define LEN_MOVE 4
+#define MAX_DEPTH 5
+#define LEN_MOVE 9
 
 /**
  * @brief The main process to route the rover to it's base station
