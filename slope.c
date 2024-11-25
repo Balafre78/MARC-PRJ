@@ -42,7 +42,7 @@ void createSlopeArrFromFile(t_map *map, char *filename) {
 
     fscanf(file, "%d", &ydim);
     fscanf(file, "%d", &xdim);
-    printf("dims: %d %d\n", ydim, xdim);
+    //printf("dims: %d %d\n", ydim, xdim);
     if (ydim != map->y_max || xdim != map->x_max) {
         fprintf(stderr, "Incoherent slope dimension descriptor !\n");
         free(fullFilename);
@@ -122,21 +122,4 @@ void createSlopeArrFromFile(t_map *map, char *filename) {
     }
     free(map->costs);
     map->costs = altcosts;
-
-    /*for (int i = 0; i < ydim; i++) {
-        for (int j = 0; j < xdim; j++)
-            printf(" %5d", map->costs[i][j]);
-        printf("\n");
-    }
-    for (int i = 0; i < ydim; i++) {
-        for (int j = 0; j < xdim; j++)
-            printf(" %5d", map->slopes[i][j]);
-        printf("\n");
-    }
-    for (int i = 0; i < ydim; i++) {
-        for (int j = 0; j < xdim; j++)
-            printf(" %5d", map->soils[i][j]);
-        printf("\n");
-    }*/
-
 }

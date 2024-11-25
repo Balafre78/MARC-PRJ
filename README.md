@@ -1,15 +1,15 @@
-# MARC PRJ - *PierreRaphaëlJustin*
+# MARC PRJ - *Pierre Raphaël Justin*
 
 ---
 
-## Acknowledgement
+## Information
 
 * Ce dépôt est un fork de [nicolas-flasque-efrei/MARC](https://github.com/nicolas-flasque-efrei/MARC)
 * Le projet et sa description sont proposé par [@nicolas-flasqu-efrei](https://github.com/nicolas-flasque-efrei)
 
 ---
 
-## Avant-propos - Mise en contexte
+## Avant-propos
 
 2028 : Une tempête solaire très intense vient de se produire… Le rover MARC – MArs Rover Cartograph, qui s’acquittait
 fort bien de sa mission, a été victime d’un dysfonctionnement. Ses systèmes de programmation, de guidage et de
@@ -28,39 +28,44 @@ Fort heureusement, son radar et son gyroscope fonctionnent encore et lui permett
 **MARC PRJ** est dépôt qui contient les sources de ce petit robot. Il est divisé en deux parties :
 
 - Une suite de test préconfiguré `testunit.h`
-- Un module pour guider le robot à sa base `main.c`
+- Un module pour guider le robot à sa base `main.c` (fonctionnalité principale)
 
 Le robot utilise la procédure suivante pour retrouver sa base :
 
-- Piocher des mouvements parmi ses réserves `selMoves()`
-- Tester toutes les combinaisons possibles `buildTree()`
-- Trouver le celle la plus efficace `minimalNode()`
-- Retrouver la combinaison de mouvement associé `findNodePath()`
+- Piocher des mouvements **aléatoirement** parmi ses réserves `selMoves()`
+- Construire toutes les **combinaisons possibles** `buildTree()`
+- Trouver le **meilleur avancement** `minimalNode()`
+- Retrouver la **combinaison de mouvement** associé `findNodePath()`
 
 ## Caractéristiques techniques
 
-Ce projet intègre :
+**Ce projet intègre :**
 
-- Une fonction pour retrouver sa base `runRover()`
-- Un rapport détaillé sur le temps d'exécution du des différentes étapes clés cités plus haut.
-- Des cartes supplémentaires disponibles dans `/map`
-- L'option (désactivée par défaut) d'activée la reconnaissance des pentes (slopes)
-    - Cela modifie le comportement de la fonction de génération de map `createMapFromFile()`
-    - Cela modifie le comportement de déplacement qui s'en retrouve impactée `move()`
+- Une fonction pour retrouver sa base `runRover()`.
+- Un [rapport](complexity/times.md) sur le temps d'exécution du des différentes étapes clés cités plus haut.
+- Une [explication](maps/maps.md) du fonctionnement des `.map`.
+- Des cartes supplémentaires disponibles dans [/map](maps).
+- L'option (activée par défaut) pour la reconnaissance des pentes (slopes).
+    - Cela modifie le comportement de la fonction de génération de map `createMapFromFile()`.
+    - Cela modifie le comportement de déplacement qui s'en retrouve impactée `move()`.
 
 ## Guide de démarrage
 
 Pour exécuter ce programme vous aurez besoin d'un compilateur C.
-Le mode de compilation choisi est avec **cmake**
+<br>Le mode de compilation choisi est avec **cmake**.
 
-Démarrage rapide :
+**Démarrage rapide :**
 
-1. Cloner le projet dans un répertoire local.
+1. Cloner le projet dans un répertoire local `git clone https://github.com/Balafre78/MARC-PRJ`.
 2. L'outil conseillé pour la compilation est CLion sinon se référer à
-   ce [gist](https://gist.github.com/sohukia/a65952b1e3ffae028b15a020402a6413)
-3. Activer ou désactiver certaines options (tel que `SLOPE_OPT` dans `slope.h` ou `SEED` dans `main.c`)
+   ce [gist](https://gist.github.com/sohukia/a65952b1e3ffae028b15a020402a6413).
+3. Activer ou désactiver certaines options (voir ci-dessous).
 4. Compile & Run !
 
-
-
-
+| Option        | Type | Fonction                                            |
+|---------------|------|-----------------------------------------------------|
+| **SEED**      | int  | Définie une seed pour les test                      |
+| **SLOPE_OPT** | bool | Active la prise en charge des slopes                |
+| **MAX_DEPTH** | int  | Nombre maximal de mouvements séléctionnés par phase |
+| **LEN_MOVE**  | int  | Nombre de mouvements disponibles par phase          |
+| **DEBUG**     | bool | Active les options de débbuggage                    |

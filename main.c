@@ -7,8 +7,8 @@
 // Uncomment SEED macro to use fixed seed for random generation
 #define SEED 1732121615
 
-#define MAX_DEPTH 5
-#define LEN_MOVE 9
+#define MAX_DEPTH 2
+#define LEN_MOVE 4
 
 /**
  * @brief The main process to route the rover to it's base station
@@ -36,7 +36,7 @@ int main()
     // Unit test
     // unitTest();
     // Main process of finding the base
-    runRover(MAX_DEPTH, LEN_MOVE, false, true, true, true, true);
+    runRover(MAX_DEPTH, LEN_MOVE, true, true, true, true, true);
     return 0;
 }
 
@@ -44,7 +44,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
               bool displayPhaseResult, bool displayTimers) {
     t_map map;
     #if defined(_WIN32) || defined(_WIN64)
-        map = createMapFromFile("..\\maps\\example1.map");
+        map = createMapFromFile("..\\maps\\mars.map");
     #else
         map = createMapFromFile("../maps/example1.map");
     #endif
@@ -61,7 +61,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
     t_tree *tree;
     bool finishOnReg = false;
 
-    int phase = 0;
+    int phase = 0, moves = 0;
     while (roverPosition.pos.x != basePosition.x || roverPosition.pos.y != basePosition.y) {
         // START OF PHASE
         phase++;
@@ -106,6 +106,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
 
         // EXECUTE MOVES
         int pathLen = path.nbElts;
+        moves += pathLen;
         t_move *mvtArr = malloc(pathLen * sizeof(t_move));
         int *structMvtArr = calloc(lenMove, sizeof(t_move));
 
@@ -163,7 +164,7 @@ void runRover(int maxDepth, int lenMove, bool displayTree, bool displayAvailMove
         }
         // END OF PHASE
     }
-    printf("-> Arrived at the base station in %d phase(s) !\n", phase);
+    printf("-> Arrived at the base station in %d phase(s) ! (%d moves)\n", phase, moves);
 
     stopTimer(&runTimer);
     if(displayTimers) {

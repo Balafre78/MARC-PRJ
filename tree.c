@@ -29,6 +29,7 @@ t_node *minimalNodeRec(t_node *node, t_node *currentMin);
 
 /**
  * @brief Destroy a node and all his children in the heap
+ * @warning Could be very long
  * @param node The node to delete
  */
 void deleteNodeRec(t_node *node);
@@ -37,12 +38,12 @@ void deleteNodeRec(t_node *node) {
     if (node->nbSons > 0) {
         // Delete recursively all sons
         for (int i = 0; i < node->nbSons; i++)
-            if (node->sons[i] != NULL)
+            //if (node->sons[i] != NULL)
                 deleteNodeRec(node->sons[i]);
 
         free(node->sons);
-        node->sons = NULL;
-        node->parent = NULL;
+        //node->sons = NULL;
+        //node->parent = NULL;
     }
     free(node);
 }
